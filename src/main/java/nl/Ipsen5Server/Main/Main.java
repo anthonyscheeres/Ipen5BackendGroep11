@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 
+import io.dropwizard.server.DefaultServerFactory;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import io.dropwizard.Application;
@@ -16,30 +17,29 @@ import io.dropwizard.setup.Environment;
 public class Main extends Application<Configuration>{
 	
 	
-		  public static void main(String[] args) throws Exception {
-			  new Main().run(new String[] { "server" });
-		  }
+      public static void main(String[] args) throws Exception {
+          new Main().run(new String[] { "server" });
+      }
 	
-	
-    /**
-     * @author Anthony Scheeres
-     */
+
     @Override
     public void initialize(Bootstrap<Configuration> bootstrap) {
        
     }
-    
-    
-    /**
-     * @author Anthony Scheeres
-     */
+
     @Override
     public void run(Configuration configuration, Environment environment) throws Exception {
-    
-    	
+
+
+        //Set defaultserver
+        final DefaultServerFactory serverFactory = (DefaultServerFactory) configuration.getServerFactory();
+
+        //set API prefix, for the URL (www.website.nl/api/<info>
+        serverFactory.setApplicationContextPath("/");
+        serverFactory.setJerseyRootPath("/api");
+
     	 // Enable CORS headers
-        final FilterRegistration.Dynamic cors =
-            environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+        final FilterRegistration.Dynamic cors = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
         
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
@@ -52,6 +52,10 @@ public class Main extends Application<Configuration>{
         
         //Example on how to import a resource:
 		//environment.jersey().register(new UserResource());
+
+        //Example on how to import a resource including DAO:
+        // final CategoryCountDAO categoryCountDAO = jdbi.onDemand(CategoryCountDAO.class);
+        //environment.jersey().register(new CategoryCountResource(categoryCountDAO));
 
     }
 }

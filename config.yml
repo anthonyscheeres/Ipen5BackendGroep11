@@ -1,0 +1,42 @@
+##YAML Template
+---
+
+logging:
+  level: INFO
+  loggers:
+    com.udemy: DEBUG
+
+database:
+
+  #Ik heb deze file ingevuld met database info van een ander project, als template / test
+
+  #database driverclass
+  driverClass: org.mariadb.jdbc.Driver
+
+  #databse username
+  user: groep11
+
+  #Database password
+  password: verry good database password
+
+  #Hier moet de database URL komen
+  url: jdbc:mariadb://92.65.83.65:8082/ipsen5groep11
+
+  properties:
+    charSet: UTF-8
+
+  maxWaitForConnection: 1s
+
+  validationQuery: "/* HelloResource Health Check */ SELECT 1"
+
+  validationQueryTimeout: 3s
+
+  minSize: 8
+
+  maxSize: 32
+
+  checkConnectionWhileIdle: false
+
+  evictionInterval: 10s
+
+  minIdleTime: 1 minute
