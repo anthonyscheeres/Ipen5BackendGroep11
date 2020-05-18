@@ -1,7 +1,5 @@
 database:
 
-  #Ik heb deze file ingevuld met database info van een ander project, als template / test
-
   #database driverclass
   driverClass: org.mariadb.jdbc.Driver
 
@@ -13,8 +11,6 @@ database:
 
   #Hier moet de database URL komen
   url: jdbc:mariadb://92.65.83.65:8082/ipsen5groep11
-
-  maxConnectionAge: 0
 
   # any properties specific to your JDBC driver:
   properties:

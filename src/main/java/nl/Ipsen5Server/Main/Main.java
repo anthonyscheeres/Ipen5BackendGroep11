@@ -19,7 +19,7 @@ public class Main extends Application<DropwizardSettings>{
 	
 	
     public static void main(String[] args) throws Exception {
-        new Main().run(new String[] { "server" });
+        new Main().run(args);
     }
 	
 
