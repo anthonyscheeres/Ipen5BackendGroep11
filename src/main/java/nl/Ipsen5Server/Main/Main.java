@@ -8,6 +8,8 @@ import javax.servlet.FilterRegistration;
 
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.server.DefaultServerFactory;
+import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Presentation.UserResource;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import io.dropwizard.Application;
@@ -32,11 +34,9 @@ public class Main extends Application<DropwizardSettings>{
     @Override
     public void run(DropwizardSettings settings, Environment environment) throws Exception {
 
-        //standard initalaizations
+        //standard database initalaizations
         final JdbiFactory factory = new JdbiFactory();
         final DefaultServerFactory serverFactory = (DefaultServerFactory) settings.getServerFactory();
-
-        //dit is het probleem
         final Jdbi jdbi = factory.build(environment, settings.getDataSourceFactory(), "mariadb");
 
         //api prefix
@@ -54,9 +54,11 @@ public class Main extends Application<DropwizardSettings>{
         // Add URL mapping
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         
-        
-        //Example on how to import a resource:
-		//environment.jersey().register(new UserResource());
+        //initialize DAO's for the resources
+        final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
+
+        //Initialize new resources
+        environment.jersey().register(new UserResource(userDAO));
 
     }
 }
