@@ -17,7 +17,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.jdbi.v3.core.Jdbi;
 
-public class Main extends Application<DropwizardSettings>{
+public class Main extends Application<Settings>{
 	
 	
     public static void main(String[] args) throws Exception {
@@ -26,13 +26,13 @@ public class Main extends Application<DropwizardSettings>{
 	
 
     @Override
-    public void initialize(Bootstrap<DropwizardSettings> bootstrap) {
+    public void initialize(Bootstrap<Settings> bootstrap) {
 
     }
     
 
     @Override
-    public void run(DropwizardSettings settings, Environment environment) throws Exception {
+    public void run(Settings settings, Environment environment) throws Exception {
 
         //standard database initalaizations
         final JdbiFactory factory = new JdbiFactory();

@@ -7,7 +7,7 @@ import io.dropwizard.db.DataSourceFactory;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class DropwizardSettings extends Configuration {
+public class Settings extends Configuration {
 
     @Valid
     @NotNull
