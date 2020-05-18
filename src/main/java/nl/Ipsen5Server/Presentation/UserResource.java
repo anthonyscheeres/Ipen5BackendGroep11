@@ -1,6 +1,8 @@
 package nl.Ipsen5Server.Presentation;
 
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.User;
@@ -9,13 +11,17 @@ import org.json.JSONObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Path("/user")
 public class UserResource {
 
     private UserDAO dao;
-
+    private final String secretKey = "verysecredapikey";
+    
+    
     public UserResource(UserDAO dao) {
         this.dao = dao;
     }
@@ -62,6 +68,46 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
-
+    
+    @POST
+    @Path("/login")
+    public Response loginUser(
+        @FormParam("Email") String Email,  @FormParam("Password") String UserPassword
+    ){
+    	String failedResponeMessage = "Login credentials were invalide";
+    	
+    	Response defaultRespone = Response.serverError()
+                .entity(failedResponeMessage)
+                .build();
+    	
+    	
+    	Response response = defaultRespone;
+    	
+    	
+        Boolean isAutherised = dao.loginByEmailAndPassword(Email, UserPassword);
+        
+        if (isAutherised) {
+        	
+        	Map<String, Object> tokenData = new HashMap<String, Object>();
+            tokenData.put("Email", Email);
+            tokenData.put("UserPassword", UserPassword);
+            tokenData.put("CreateDate", LocalDateTime.now());
+            JwtBuilder jwtBuilder = Jwts.builder();
+            jwtBuilder.setClaims(tokenData);
+        	
+          
+            
+            String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
+        	
+        	Response successResponse = Response.ok()
+                    .entity(token)
+                    .build();
+        	
+        	response = successResponse;
+        	
+        }
+        
+        return response;
+    }
 
 }
