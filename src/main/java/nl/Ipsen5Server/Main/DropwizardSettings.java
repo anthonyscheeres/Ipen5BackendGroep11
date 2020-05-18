@@ -8,12 +8,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 
-public class Settings extends Configuration {
+public class DropwizardSettings extends Configuration {
 
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
-
 
     @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
@@ -24,5 +23,4 @@ public class Settings extends Configuration {
     public DataSourceFactory getDataSourceFactory() {
         return database;
     }
-
 }
