@@ -5,21 +5,23 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Domain.User;
+
+import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Path("/user")
 public class UserResource {
 
     private UserDAO dao;
-    private final String secretKey = "verysecredapikey";
+    private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
     
     
     public UserResource(UserDAO dao) {
@@ -71,8 +73,9 @@ public class UserResource {
     
     @POST
     @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response loginUser(
-        @FormParam("Email") String Email,  @FormParam("Password") String UserPassword
+    		Account user
     ){
     	String failedResponeMessage = "Login credentials were invalide";
     	
@@ -82,15 +85,14 @@ public class UserResource {
     	
     	
     	Response response = defaultRespone;
-    	
-    	
-        Boolean isAutherised = dao.loginByEmailAndPassword(Email, UserPassword);
+    	int false_ = 0;
+        int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword());
         
-        if (isAutherised) {
+        if (isAutherised!=false_) {
         	
         	Map<String, Object> tokenData = new HashMap<String, Object>();
-            tokenData.put("Email", Email);
-            tokenData.put("UserPassword", UserPassword);
+            tokenData.put("Email", user.getEmail());
+            tokenData.put("UserPassword", user.getUserPassword());
             tokenData.put("CreateDate", LocalDateTime.now());
             JwtBuilder jwtBuilder = Jwts.builder();
             jwtBuilder.setClaims(tokenData);

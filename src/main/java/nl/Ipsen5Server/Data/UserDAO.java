@@ -25,8 +25,8 @@ public interface UserDAO {
     User getUserByEmail(@Bind("Email") String Email);
 
     
-    @SqlQuery("if EXISTS (SELECT * FROM Medewerker WHERE Email = :Email and UserPassword = :UserPassword)")
-	Boolean loginByEmailAndPassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword);
+    @SqlQuery("SELECT IF( EXISTS (SELECT * FROM Medewerker WHERE Email = :Email and UserPassword = :UserPassword), 1, 0)")
+	int loginByEmailAndPassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword);
 
 
 }
