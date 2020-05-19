@@ -1,21 +1,29 @@
 package nl.Ipsen5Server.Presentation;
 
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Domain.User;
+
+import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.*;
 
 @Path("/user")
 public class UserResource {
 
     private UserDAO dao;
-
+    private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
+    
+    
     public UserResource(UserDAO dao) {
         this.dao = dao;
     }
@@ -62,6 +70,57 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
+    
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    @POST
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginUser(
+    		Account user
+    ){
 
+    
+    	String failedResponeMessage = "Login credentials were invalide";
+    	
+    	Response defaultRespone = Response.serverError()
+                .entity(failedResponeMessage)
+                .build();
+    	
+    	Response response = defaultRespone; //return this response unless changed
+    	
+    	int true_ = 1; //in mariadb 1 is true and 0 false
+    	
+        int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword()); //check credentials in database
+        
+        if (isAutherised==true_) { 
+        	
+        	Map<String, Object> tokenData = new HashMap<String, Object>();
+            tokenData.put("Email", user.getEmail());
+            tokenData.put("UserPassword", user.getUserPassword());			//put values in the hashmap
+            tokenData.put("CreateDate", LocalDateTime.now());
+            
+            
+            JwtBuilder jwtBuilder = Jwts.builder();
+            jwtBuilder.setClaims(tokenData);
+        	
+          
+            
+            String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact(); //encrypt data
+        	
+        	Response successResponse = Response.ok() 
+                    .entity(token)                       //intialize success response and pass the token
+                    .build();
+        	
+        	response = successResponse; //change response 
+        	
+        }
+        
+        return response;
+    }
 
 }

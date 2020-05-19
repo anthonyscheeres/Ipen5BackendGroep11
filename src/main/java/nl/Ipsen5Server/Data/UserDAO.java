@@ -22,7 +22,16 @@ public interface UserDAO {
     ArrayList<User> getAll();
 
     @SqlQuery("SELECT * FROM Medewerker WHERE Email = :Email")
-    User getUserByEmail(@Bind("Email") String Email);
+    User getUserByEmail(@Bind("Email") String Email); //TODO: connection for other methodes in this class closes when on of these used it before
+
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    @SqlQuery("SELECT IF( EXISTS (SELECT * FROM Medewerker WHERE Email = :Email and UserPassword = :UserPassword), 1, 0)")
+	int loginByEmailAndPassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword);
 
 
 }
+
