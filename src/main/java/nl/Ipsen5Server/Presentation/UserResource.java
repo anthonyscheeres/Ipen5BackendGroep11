@@ -71,41 +71,52 @@ public class UserResource {
                 .build();
     }
     
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response loginUser(
     		Account user
     ){
+
+    
     	String failedResponeMessage = "Login credentials were invalide";
     	
     	Response defaultRespone = Response.serverError()
                 .entity(failedResponeMessage)
                 .build();
     	
+    	Response response = defaultRespone; //return this response unless changed
     	
-    	Response response = defaultRespone;
-    	int false_ = 0;
-        int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword());
+    	int true_ = 1; //in mariadb 1 is true and 0 false
+    	
+        int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword()); //check credentials in database
         
-        if (isAutherised!=false_) {
+        if (isAutherised==true_) {
         	
         	Map<String, Object> tokenData = new HashMap<String, Object>();
             tokenData.put("Email", user.getEmail());
-            tokenData.put("UserPassword", user.getUserPassword());
+            tokenData.put("UserPassword", user.getUserPassword());			//put values in the hashmap
             tokenData.put("CreateDate", LocalDateTime.now());
+            
+            
             JwtBuilder jwtBuilder = Jwts.builder();
             jwtBuilder.setClaims(tokenData);
         	
           
             
-            String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact();
+            String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact(); //encrypt data
         	
-        	Response successResponse = Response.ok()
-                    .entity(token)
+        	Response successResponse = Response.ok() 
+                    .entity(token)                       //intialize success response and pass the token
                     .build();
         	
-        	response = successResponse;
+        	response = successResponse; //change response 
         	
         }
         
