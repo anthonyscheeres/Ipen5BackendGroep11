@@ -97,7 +97,7 @@ public class UserResource {
     	
         int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword()); //check credentials in database
         
-        if (isAutherised==true_) {
+        if (isAutherised==true_) { 
         	
         	Map<String, Object> tokenData = new HashMap<String, Object>();
             tokenData.put("Email", user.getEmail());
