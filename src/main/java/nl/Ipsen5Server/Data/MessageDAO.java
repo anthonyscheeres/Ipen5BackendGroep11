@@ -25,4 +25,12 @@ public interface MessageDAO {
     );
 
 
+    @SqlUpdate("INSERT INTO MessageTemplate(MessageID, Message, Info)" +
+            " VALUES (:MessageID,:Message,:Info)")
+    void uploadNewMessage(
+            @Bind("MessageID") String MessageID,
+            @Bind("Message") String Message,
+            @Bind("Info") String Info
+    );
+
 }

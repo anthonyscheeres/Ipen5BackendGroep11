@@ -60,5 +60,20 @@ public class MessageResource {
                 .build();
     }
 
+    @POST
+    @Path("/new")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response createNewTemplate(
+            @FormParam("MessageID") String MessageID,
+            @FormParam("Message") String Message,
+            @FormParam("Info") String Info
+    ) {
+        dao.uploadNewMessage(MessageID, Message, Info);
+
+        return Response.ok()
+                .entity("New template successfully created with id: " + MessageID + ". The message: " + Message)
+                .build();
+    }
+
 
 }
