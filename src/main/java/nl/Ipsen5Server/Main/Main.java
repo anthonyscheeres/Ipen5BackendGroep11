@@ -8,7 +8,9 @@ import javax.servlet.FilterRegistration;
 
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.server.DefaultServerFactory;
+import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Presentation.UserResource;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
@@ -56,9 +58,11 @@ public class Main extends Application<Settings>{
         
         //initialize DAO's for the resources
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
+        final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
 
         //Initialize new resources
         environment.jersey().register(new UserResource(userDAO));
+        environment.jersey().register(new MessageResource(messageDAO));
 
     }
 }
