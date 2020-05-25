@@ -7,6 +7,8 @@ import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Domain.User;
+import nl.Ipsen5Server.Interfaces.Authorisation;
+import nl.Ipsen5Server.Service.Token;
 
 import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
@@ -21,14 +23,18 @@ import java.util.*;
 public class UserResource {
 
     private UserDAO dao;
-    private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
+    private Authorisation tokenUtils; 
     
+  
     
-    public UserResource(UserDAO dao) {
-        this.dao = dao;
-    }
+    public UserResource(UserDAO dao, Authorisation tokenUtils) {
+		super();
+		this.dao = dao;
+		this.tokenUtils = tokenUtils;
+	}
 
-    @GET
+
+	@GET
     public List<User> getAll() { return dao.getAll(); }
 
 
@@ -83,8 +89,11 @@ public class UserResource {
     public Response loginUser(
     		Account user
     ){
-
-    
+    	//define the token service we use
+    	Token service = new Token();
+    	tokenUtils =  service;
+    	
+    	//define default response return when error
     	String failedResponeMessage = "Login credentials were invalide";
     	
     	Response defaultRespone = Response.serverError()
@@ -93,32 +102,30 @@ public class UserResource {
     	
     	Response response = defaultRespone; //return this response unless changed
     	
-    	int true_ = 1; //in mariadb 1 is true and 0 false
-    	
-        int isAutherised = dao.loginByEmailAndPassword(user.getEmail(), user.getUserPassword()); //check credentials in database
+try {
+	
+	tokenUtils.check(user , dao);
+	
+	
+	
+	
+String token = tokenUtils.create(user);
+	
+	Response successResponse = Response.ok() 
+            .entity(token)                       //intialize success response and pass the token
+            .build();
+	
+	response = successResponse; //change response 
+
+}
+catch (NotAuthorizedException e) {
+	//do something different or customize the response 
+}
+        	
+        	
+
+        	
         
-        if (isAutherised==true_) { 
-        	
-        	Map<String, Object> tokenData = new HashMap<String, Object>();
-            tokenData.put("Email", user.getEmail());
-            tokenData.put("UserPassword", user.getUserPassword());			//put values in the hashmap
-            tokenData.put("CreateDate", LocalDateTime.now());
-            
-            
-            JwtBuilder jwtBuilder = Jwts.builder();
-            jwtBuilder.setClaims(tokenData);
-        	
-          
-            
-            String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact(); //encrypt data
-        	
-        	Response successResponse = Response.ok() 
-                    .entity(token)                       //intialize success response and pass the token
-                    .build();
-        	
-        	response = successResponse; //change response 
-        	
-        }
         
         return response;
     }
