@@ -1,11 +1,17 @@
 package nl.Ipsen5Server.Interfaces;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nl.Ipsen5Server.Database.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 
 public interface Authorisation {
  
 	
-	public String create(Account user);
-	public void check(Account user, UserDAO dao );
+	String create(Account user);
+	void check(Account user, UserDAO dao );
+	Map<String, Object> decrypt(String token);
+	
+	
 }

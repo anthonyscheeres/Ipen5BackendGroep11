@@ -7,16 +7,20 @@ import javax.ws.rs.NotAuthorizedException;
 
 import org.joda.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoder;
 import nl.Ipsen5Server.Database.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 
 public class Token implements Authorisation{
 	private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
-  
+	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
 	
 	@Override
 	public String create(Account user ){
@@ -31,7 +35,7 @@ public class Token implements Authorisation{
     	
       
         
-        String token = jwtBuilder.signWith(SignatureAlgorithm.HS512, secretKey).compact(); //encrypt data
+        String token = jwtBuilder.signWith(signatureAlgorithm, secretKey).compact(); //encrypt data
         return token; 
 	}
 	
@@ -51,6 +55,20 @@ public class Token implements Authorisation{
 		
 		
 	}
+	@Override
+	public Map<String, Object> decrypt(String token) {
+	
+		
+		Object serializedObjects = Jwts.parser().setSigningKey(secretKey, ).parseClaimsJws(token).getBody();  
+		Map<String, Object> response;
+		
+		 ObjectMapper oMapper = new ObjectMapper();
+		
+		response = oMapper.convertValue(serializedObjects, HashMap.class);
+		
+		return response;
+	}
+	
 	
 	
 	
