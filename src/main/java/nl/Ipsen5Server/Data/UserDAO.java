@@ -22,8 +22,7 @@ public interface UserDAO {
     ArrayList<User> getAll();
 
     @SqlQuery("SELECT * FROM Medewerker WHERE Email = :Email")
-    User getUserByEmail(@Bind("Email") String Email); //TODO: connection for other methodes in this class closes when on of these used it before
-
+    User getUserByEmail(@Bind("Email") String Email); 
     /**
     *
     * @author Anthony Scheeres
