@@ -59,7 +59,7 @@ public class Token implements Authorisation{
 	public Map<String, Object> decrypt(String token) {
 	
 		
-		Object serializedObjects = Jwts.parser().setSigningKey(secretKey, ).parseClaimsJws(token).getBody();  
+		Object serializedObjects = Jwts.parser().setSigningKey(secretKey ).parseClaimsJws(token).getBody();  
 		Map<String, Object> response;
 		
 		 ObjectMapper oMapper = new ObjectMapper();
