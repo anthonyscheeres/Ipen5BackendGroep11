@@ -1,4 +1,4 @@
-package nl.Ipsen5Server.Data;
+package nl.Ipsen5Server.Database;
 
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Service.UserMapper;
