@@ -89,11 +89,7 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response loginUser(
     		Account user
-    ){
-    	//define the token service we use
-    	Token service = new Token();
-    	tokenUtils =  service;
-    	
+    ){	
     	//define default response return when error
     	String failedResponeMessage = "Login credentials were invalide";
     	
