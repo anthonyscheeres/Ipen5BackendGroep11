@@ -112,7 +112,7 @@ try {
 String token = tokenUtils.create(user);
 	
 	Response successResponse = Response.ok() 
-            .entity(token)                       //intialize success response and pass the token
+            .entity(token)                       //Initialize success response and pass the token
             .build();
 	
 	response = successResponse; //change response 
