@@ -13,6 +13,8 @@ import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Presentation.UserResource;
+import nl.Ipsen5Server.Service.Token;
+
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import io.dropwizard.Application;
@@ -61,7 +63,7 @@ public class Main extends Application<Settings>{
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
         final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
 
-        Authorisation a = null ; // forces you to use the interfaced method
+        Authorisation a =  new Token();// forces you to use the interfaced method
         
         //Initialize new resources
         environment.jersey().register(new UserResource(userDAO, a) );

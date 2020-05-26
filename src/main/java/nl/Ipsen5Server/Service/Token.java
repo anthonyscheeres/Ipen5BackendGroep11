@@ -18,10 +18,23 @@ import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 
+
+/**
+*
+* @author Anthony Scheeres
+*
+*/
 public class Token implements Authorisation{
 	private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
 	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
 	
+	
+	
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
 	@Override
 	public String create(Account user ){
 		Map<String, Object> tokenData = new HashMap<String, Object>();
@@ -39,6 +52,11 @@ public class Token implements Authorisation{
         return token; 
 	}
 	
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
 	@Override
 	public void check(Account user, UserDAO dao) throws NotAuthorizedException {
 		
@@ -55,6 +73,12 @@ public class Token implements Authorisation{
 		
 		
 	}
+	
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
 	@Override
 	public Map<String, Object> decrypt(String token) {
 	
