@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
+import nl.Ipsen5Server.Domain.TokenBody;
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Service.Token;
@@ -111,8 +112,8 @@ try {
 	
 String token = tokenUtils.create(user);
 	
-	Response successResponse = Response.ok() 
-            .entity(token)                       //Initialize success response and pass the token
+	Response successResponse = Response.ok(new TokenBody(token), MediaType.APPLICATION_JSON)                       //Initialize success response and pass the token
+       
             .build();
 	
 	response = successResponse; //change response 
