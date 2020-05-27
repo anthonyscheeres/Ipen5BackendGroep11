@@ -63,9 +63,11 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 	
 		Map<String, String> h = tokenUtils.decrypt(token)	;
 		
-		//System.out.println(h.get(Token.Email));test if email is correct
+		//System.out.println(h.get(Token.Email)); //test if email is correct
 		
 		tokenUtils.check(new Account(h.get(Token.Email), h.get(Token.UserPassword)), user);
+		
+		
 		
 	for (Dump excelRow : excel) {
 	

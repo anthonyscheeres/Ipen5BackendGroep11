@@ -102,7 +102,10 @@ try {
 	
 String token = tokenUtils.create(user);
 	
-	Response successResponse = Response.ok(new TokenBody(token), MediaType.APPLICATION_JSON)                       //Initialize success response and pass the token
+
+
+
+	Response successResponse = Response.ok(new TokenBody(token, dao.getRoleByEmail(user.getEmail());), MediaType.APPLICATION_JSON)                       //Initialize success response and pass the token
        
             .build();
 	
