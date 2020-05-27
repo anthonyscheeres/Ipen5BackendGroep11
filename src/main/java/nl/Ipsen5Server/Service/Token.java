@@ -27,8 +27,9 @@ import nl.Ipsen5Server.Interfaces.Authorisation;
 public class Token implements Authorisation{
 	private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
 	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-	
-	
+	public static final String Email  = "Email";
+	public static final String UserPassword= "UserPassword";
+	public static final String CreateDate = "CreateDate";
 	
     /**
     *
@@ -38,9 +39,9 @@ public class Token implements Authorisation{
 	@Override
 	public String create(Account user ){
 		Map<String, Object> tokenData = new HashMap<String, Object>();
-        tokenData.put("Email", user.getEmail());
-        tokenData.put("UserPassword", user.getUserPassword());			//put values in the hashmap
-        tokenData.put("CreateDate", LocalDateTime.now());
+        tokenData.put(Email, user.getEmail());
+        tokenData.put(UserPassword, user.getUserPassword());			//put values in the hashmap
+        tokenData.put(CreateDate, LocalDateTime.now());
         
         
         JwtBuilder jwtBuilder = Jwts.builder();
@@ -80,11 +81,11 @@ public class Token implements Authorisation{
     *
     */
 	@Override
-	public Map<String, Object> decrypt(String token) {
+	public Map<String, String> decrypt(String token) {
 	
 		
 		Object serializedObjects = Jwts.parser().setSigningKey(secretKey ).parseClaimsJws(token).getBody();  
-		Map<String, Object> response;
+		Map<String, String> response;
 		
 		 ObjectMapper oMapper = new ObjectMapper();
 		

@@ -20,7 +20,7 @@ public interface Authorisation {
 	
 	String create(Account user);
 	void check(Account user, UserDAO dao ) throws NotAuthorizedException;
-	Map<String, Object> decrypt(String token);
+	Map<String, String> decrypt(String token);
 	
 	
 }
