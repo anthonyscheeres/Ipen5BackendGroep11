@@ -32,7 +32,7 @@ public interface UserDAO {
 	int loginByEmailAndPassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword);
 
     @SqlQuery("SELECT Usertype FROM Mederwerker WHERE Email = :Email)")
-	Object getRoleByEmail(@Bind("Email") String email);
+	String getRoleByEmail(@Bind("Email") String email);
 
 
 }
