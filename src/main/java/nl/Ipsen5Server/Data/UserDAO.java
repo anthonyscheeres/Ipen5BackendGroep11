@@ -23,6 +23,8 @@ public interface UserDAO {
 
     @SqlQuery("SELECT * FROM Medewerker WHERE Email = :Email")
     User getUserByEmail(@Bind("Email") String Email); 
+    
+    
     /**
     *
     * @author Anthony Scheeres
@@ -30,7 +32,11 @@ public interface UserDAO {
     */
     @SqlQuery("SELECT IF( EXISTS (SELECT * FROM Medewerker WHERE Email = :Email and UserPassword = :UserPassword), 1, 0)")
 	int loginByEmailAndPassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword);
-
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
     @SqlQuery("SELECT Usertype FROM Mederwerker WHERE Email = :Email)")
 	String getRoleByEmail(@Bind("Email") String email);
 

@@ -1,5 +1,9 @@
 package nl.Ipsen5Server.Domain;
-
+/**
+*
+* @author Anthony Scheeres
+*
+*/
 public class Dump {
 	private String uID;
 	private String site;	

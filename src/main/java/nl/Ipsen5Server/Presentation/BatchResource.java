@@ -34,7 +34,11 @@ public class BatchResource {
 	
     
     
-    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
 	public BatchResource(BatchDAO dao, Authorisation tokenUtils, UserDAO user) {
 		super();
 		this.dao = dao;
