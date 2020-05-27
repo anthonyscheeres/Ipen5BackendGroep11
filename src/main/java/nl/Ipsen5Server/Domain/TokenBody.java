@@ -12,6 +12,13 @@ public TokenBody(String token, String role) {
 	this.role = role;
 }
 
+
+
+public TokenBody(String token) {
+	super();
+	this.token = token;
+}
+
 	
 	
 	
