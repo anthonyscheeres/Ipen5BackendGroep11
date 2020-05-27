@@ -67,10 +67,20 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		
 		tokenUtils.check(new Account(h.get(Token.Email), h.get(Token.UserPassword)), user);
 		
-	for (Dump excelData : excel) {
+	for (Dump excelRow : excel) {
 	
 		
-		dao.Insert(excelData.getEmail(), excelData.getGenoemde_social_media(), excelData.getMessage(), excelData.getPartial_IP(), excelData.getSite(), excelData.getTitle(), excelData.getUID(), excelData.getUser());
+		dao.Insert(excelRow.getEmail(), 
+				
+				excelRow.getGenoemde_social_media(), 
+				excelRow.getMessage(), 
+				excelRow.getPartial_IP(), 
+				excelRow.getSite(), 
+				excelRow.getTitle(), 
+				excelRow.getUID(), 
+				excelRow.getUser()
+				
+				);
 		
 	}
 		
