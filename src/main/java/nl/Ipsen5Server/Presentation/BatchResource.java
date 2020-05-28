@@ -65,11 +65,14 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 	
 	try {
 	
+		 final String Email  = "Email";
+	  final String UserPassword= "UserPassword";
+		
 		Map<String, String> h = tokenUtils.decrypt(token)	;
 		
 		//System.out.println(h.get(Token.Email)); //test if email is correct
 		
-		tokenUtils.check(new Account(h.get(Token.Email), h.get(Token.UserPassword)), user);
+		tokenUtils.check(new Account(h.get(Email), h.get(UserPassword)), user);
 		
 		
 		

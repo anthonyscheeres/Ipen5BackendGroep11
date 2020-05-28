@@ -27,9 +27,9 @@ import nl.Ipsen5Server.Interfaces.Authorisation;
 public class Token implements Authorisation{
 	private final String secretKey = "avgsgrethsbnyeastbcbIWHEHHGBWUYEBCEFJHTGBWGBWB2GYNBRGFBDDHDHREHFDJEZMJKMSVBHHnhdebrhbchrbmxjrufsncghrbfIverysecredapikey";
 	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS512;
-	public static final String Email  = "Email";
-	public static final String UserPassword= "UserPassword";
-	public static final String CreateDate = "CreateDate";
+	private final String Email  = "Email";
+	private final String UserPassword= "UserPassword";
+	private final String CreateDate = "CreateDate";
 	
     /**
     *
