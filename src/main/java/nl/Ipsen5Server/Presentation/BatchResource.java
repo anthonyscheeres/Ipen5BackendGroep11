@@ -2,6 +2,7 @@ package nl.Ipsen5Server.Presentation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.NotAuthorizedException;
@@ -12,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import helpers.StringUtils;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
@@ -65,16 +67,28 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 	
 	try {
 	
-		 final String Email  = "Email";
-	  final String UserPassword= "UserPassword";
+	String Email  = "Email";
+	String UserPassword= "UserPassword";
 		
+	
+	  
+	  
 		Map<String, String> h = tokenUtils.decrypt(token)	;
 		
+				
+				  Email = h.get(Email);		
+				  UserPassword = h.get(UserPassword);
+				
 		//System.out.println(h.get(Token.Email)); //test if email is correct
 		
-		tokenUtils.check(new Account(h.get(Email), h.get(UserPassword)), user);
+		tokenUtils.check(new Account(Email, UserPassword), user);
+		
+	
 		
 		
+		 new Thread(() -> {
+	     	
+	  
 		
 	for (Dump excelRow : excel) {
 	
@@ -88,11 +102,12 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 				excelRow.getTitle(), 
 				excelRow.getUID(), 
 				excelRow.getUser()
-				
+			
 				);
 		
 	}
-		
+	
+		   	}).start();
 	
 	String message = "Successfully created"; 
 	
