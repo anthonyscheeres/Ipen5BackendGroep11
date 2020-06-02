@@ -116,8 +116,8 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		
 		dao.UpdateInfo(
 				
-				excelRow.getPartial_IP()
-				
+				excelRow.getPartial_IP(),
+				excelRow.getMessage()
 				);
 		
 		

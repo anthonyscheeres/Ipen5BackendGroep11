@@ -24,7 +24,6 @@ public interface BatchDAO {
 
         @Bind("Platform") String genoemde_social_media
 
-
     );
 
     /**
@@ -34,6 +33,7 @@ public interface BatchDAO {
      */
     @Transaction
     @SqlUpdate(
+    		
         "INSERT INTO ContactPersoon(UserID, CustomMessage) VALUES (CONCAT(MD5(:User), MD5(:Platform)), :CustomMessage); "
 
     )
@@ -42,7 +42,9 @@ public interface BatchDAO {
 
 
         @Bind("Platform") String genoemde_social_media,
+        
         @Bind("CustomMessage") String message,
+        
         @Bind("User") String user
 
     );
@@ -77,13 +79,13 @@ public interface BatchDAO {
     @SqlUpdate(
 
 
-        "UPDATE ContactPersoon SET Info = :Info WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
+        "UPDATE ContactPersoon SET Info = :Info, CustomMessage = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
 
     )
 
     void UpdateInfo(
 
-
+    	@Bind("CustomMessage") String message,
         @Bind("Info") String partial_IP
 
     );
