@@ -13,6 +13,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jdbi.v3.core.Jdbi;
+
 import helpers.StringUtils;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
@@ -28,7 +30,8 @@ public class BatchResource {
     private Authorisation tokenUtils;
     private UserDAO user; 
     private String failedResponeMessage = "Login credentials were invalide";
-	
+    private Jdbi jdbi;
+    
     private Response defaultRespone = Response.serverError()
             .entity(failedResponeMessage)
             .build();
@@ -91,19 +94,33 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 	  
 		
 	for (Dump excelRow : excel) {
-	
 		
-		dao.Insert(excelRow.getEmail(), 
+		dao.InsertPlatform(
+				
+				excelRow.getGenoemde_social_media()
+				
+				);
+		
+		dao.InsertContactPersoon(
 				
 				excelRow.getGenoemde_social_media(), 
 				excelRow.getMessage(), 
-				excelRow.getPartial_IP(), 
-				excelRow.getSite(), 
-				excelRow.getTitle(), 
-				excelRow.getUID(), 
+				excelRow.getUser());
+		
+		dao.InsertContact(
+				
+				excelRow.getGenoemde_social_media(), 
 				excelRow.getUser()
-			
+				
 				);
+		
+		dao.UpdateInfo(
+				
+				excelRow.getPartial_IP()
+				
+				);
+		
+		
 		
 	}
 	
