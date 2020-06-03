@@ -1,6 +1,7 @@
 package nl.Ipsen5Server.Main;
 
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
@@ -8,8 +9,11 @@ import javax.servlet.FilterRegistration;
 
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.server.DefaultServerFactory;
+import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Domain.Dump;
+import nl.Ipsen5Server.Presentation.BatchResource;
 import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Presentation.UserResource;
@@ -62,12 +66,18 @@ public class Main extends Application<Settings>{
         //initialize DAO's for the resources
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
         final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
+        final BatchDAO batchDAO = jdbi.onDemand(BatchDAO.class);
 
+        
         Authorisation a =  new Token();// forces you to use the interfaced method
+        
+        //test code here =>
+ 
         
         //Initialize new resources
         environment.jersey().register(new UserResource(userDAO, a) );
         environment.jersey().register(new MessageResource(messageDAO));
+        environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
 
     }
 }
