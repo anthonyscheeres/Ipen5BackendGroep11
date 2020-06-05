@@ -12,6 +12,7 @@ import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Service.Token;
 
+import org.jdbi.v3.core.Jdbi;
 import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
@@ -26,7 +27,10 @@ public class UserResource {
 
     private UserDAO dao;
     private Authorisation tokenUtils; 
-    
+    private String failedResponeMessage = "Login credentials were invalide";    
+    private Response defaultRespone = Response.serverError()
+            .entity(failedResponeMessage)
+            .build();
   
     
     public UserResource(UserDAO dao, Authorisation tokenUtils) {
@@ -84,9 +88,14 @@ public class UserResource {
     @PUT
     @Path("/{token}/password")
     public Response passwordUser(
+    		
     		@PathParam("token") String token,
     		Account user2
+    		
     ){
+    	Response response = defaultRespone;
+    	
+    	
     	try {
     		
     		
@@ -100,29 +109,18 @@ public class UserResource {
     			Map<String, String> h = tokenUtils.decrypt(token)	;
     			
     					
-    					  Email = h.get(Email);		
-    					  UserPassword = h.get(UserPassword);
+    					  String Email2 = h.get(Email);		
+    					  String UserPassword2 = h.get(UserPassword);
     		
     			tokenUtils.check(new Account(Email, UserPassword), dao);
-    
-    			
+    		
     			 new Thread(() -> {
-    		     	
-    					
-    		    		dao.changePassword(
-    		    				
-    		    				Email, 
-    		    				UserPassword,
-    		    				NewPassword
-    		    				
-    		    				);
-    		    			
-    		    			
     		
-    		
+    		    		dao.changePassword(Email2, UserPassword2, NewPassword );
+    		 
     			   	}).start();
     		
-    		String message = "Successfully created"; 
+    		String message = "Successfull"; 
     		
     		Response successResponse = Response.ok(message)                      
     	            .build();
@@ -136,7 +134,7 @@ public class UserResource {
     		}
     		        
     		
-    		
+    		return response;
         
         
         

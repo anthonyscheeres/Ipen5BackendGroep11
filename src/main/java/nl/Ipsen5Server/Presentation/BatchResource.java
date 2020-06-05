@@ -30,7 +30,7 @@ public class BatchResource {
     private Authorisation tokenUtils;
     private UserDAO user; 
     private String failedResponeMessage = "Login credentials were invalide";
-    private Jdbi jdbi;
+    
     
     private Response defaultRespone = Response.serverError()
             .entity(failedResponeMessage)
