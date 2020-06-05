@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
+import nl.Ipsen5Server.Domain.Dump;
 import nl.Ipsen5Server.Domain.TokenBody;
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
@@ -77,6 +78,79 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
+    
+    
+    
+    @PUT
+    @Path("/{token}/password")
+    public Response passwordUser(
+    		@PathParam("token") String token,
+    		Account user2
+    ){
+    	try {
+    		
+    		
+    		
+    		String Email  = "Email";
+    		String UserPassword= "UserPassword";
+    			
+    		String NewPassword= user2.getUserPassword();
+    		  
+    		  
+    			Map<String, String> h = tokenUtils.decrypt(token)	;
+    			
+    					
+    					  Email = h.get(Email);		
+    					  UserPassword = h.get(UserPassword);
+    		
+    			tokenUtils.check(new Account(Email, UserPassword), dao);
+    
+    			
+    			 new Thread(() -> {
+    		     	
+    					
+    		    		dao.changePassword(
+    		    				
+    		    				Email, 
+    		    				UserPassword,
+    		    				NewPassword
+    		    				
+    		    				);
+    		    			
+    		    			
+    		
+    		
+    			   	}).start();
+    		
+    		String message = "Successfully created"; 
+    		
+    		Response successResponse = Response.ok(message)                      
+    	            .build();
+    		
+    		response = successResponse; //change response 
+    		
+    		
+    		}
+    		catch (NotAuthorizedException e) {
+    		
+    		}
+    		        
+    		
+    		
+        
+        
+        
+        
+    }
+    
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    
+    
     
     
     /**
