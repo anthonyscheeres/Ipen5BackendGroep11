@@ -1,5 +1,6 @@
 package nl.Ipsen5Server.Presentation;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -86,7 +87,14 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		
 		 new Thread(() -> {
 	     	
-	  
+			String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
+			
+			batch = batch.substring(0, Math.min(batch.length(), 254)); //trim the string in case it gets to long for the database
+			
+			dao.InsertBatch(batch);
+			
+			
+			
 		
 	for (Dump excelRow : excel) {
 		
@@ -116,6 +124,8 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 				
 				);
 		
+		dao.InsertContactBatch(excelRow.getUser(), excelRow.getGenoemde_social_media()
+				, batch);
 		
 		
 	}
