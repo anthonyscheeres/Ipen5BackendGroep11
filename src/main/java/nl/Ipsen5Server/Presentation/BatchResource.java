@@ -87,15 +87,44 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		
 		 new Thread(() -> {
 	     	
-			String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
+			 
+			 int randomStringLength = 0;
+				
+			 String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
+			 
+			 for(int attempts = 0; attempts < 5; attempts++)
+				// keep going till it works
+				{
+				 
+				 
+				 
+				 	
+					int minStringLengthInDatabase = 0;
+					
+					int maxStringLengthInDatabase = 254;
+					
+					
+					
+					batch = batch.substring(minStringLengthInDatabase, Math.min(batch.length(), maxStringLengthInDatabase)); //trim the string in case it gets to long for the database
+					
+					
+					try {
+						
+					
+					dao.InsertBatch(batch);
+					break;
+					
+					}catch(Error e ) {
+						randomStringLength = randomStringLength + 20;
+						batch = StringUtils.getAlphaNumericString1(randomStringLength) +batch;
+						
+					}
+				 
+				 
+				 
+				}
+			 
 			
-			int minStringLengthInDatabase = 0;
-			
-			int maxStringLengthInDatabase = 254;
-			
-			batch = batch.substring(minStringLengthInDatabase, Math.min(batch.length(), maxStringLengthInDatabase)); //trim the string in case it gets to long for the database
-			
-			dao.InsertBatch(batch);
 			
 			
 			
@@ -115,13 +144,18 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 			
 		}
 		
-		
+		try {
 		
 		dao.InsertContactPersoon(
 				
 				excelRow.getGenoemde_social_media(), 
 				excelRow.getMessage(), 
 				excelRow.getUser());
+		
+		}
+		catch(Error e) {
+			
+		}
 		
 		dao.InsertContact(
 				
@@ -139,8 +173,13 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 				
 				);
 		
-		dao.InsertContactBatch(excelRow.getUser(), excelRow.getGenoemde_social_media()
-				, batch);
+		dao.InsertContactBatch(
+				
+				excelRow.getUser(), 
+				excelRow.getGenoemde_social_media(), 
+				batch
+				
+				);
 		
 		}
 		
