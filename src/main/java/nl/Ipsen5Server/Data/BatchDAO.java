@@ -114,7 +114,11 @@ public interface BatchDAO {
     void UpdateInfo(
 
     	@Bind("CustomMessage") String message,
-        @Bind("Info") String partial_IP
+        @Bind("Info") String partial_IP,
+     
+        
+        @Bind("Platform") String platform,
+        @Bind("User") String contactPersoon
 
     );
 
@@ -128,7 +132,7 @@ public interface BatchDAO {
     @SqlUpdate(
 
 
-        "INSERT INTO Batch(BatchID) VALUES (:Batch); "
+        "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
     )
 

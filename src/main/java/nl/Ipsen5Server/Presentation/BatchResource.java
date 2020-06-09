@@ -101,12 +101,21 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 			
 		
 	for (Dump excelRow : excel) {
+		try {
 		
+		
+		try {
 		dao.InsertPlatform(
 				
 				excelRow.getGenoemde_social_media()
 				
 				);
+		}
+		catch(Error e) {
+			
+		}
+		
+		
 		
 		dao.InsertContactPersoon(
 				
@@ -124,14 +133,21 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		dao.UpdateInfo(
 				
 				excelRow.getPartial_IP(),
-				excelRow.getMessage()
+				excelRow.getMessage(),
+				excelRow.getGenoemde_social_media(), 
+				excelRow.getUser()
 				
 				);
 		
 		dao.InsertContactBatch(excelRow.getUser(), excelRow.getGenoemde_social_media()
 				, batch);
 		
+		}
 		
+		
+		catch(Error e) {
+			
+		}
 	}
 	
 		   	}).start();
