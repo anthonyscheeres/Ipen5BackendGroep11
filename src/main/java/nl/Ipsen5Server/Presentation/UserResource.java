@@ -112,7 +112,7 @@ public class UserResource {
     					  String Email2 = h.get(Email);		
     					  String UserPassword2 = h.get(UserPassword);
     		
-    			tokenUtils.check(new Account(Email, UserPassword), dao);
+    			tokenUtils.check(new Account(Email, UserPassword2), dao);
     		
     			 new Thread(() -> {
     		
