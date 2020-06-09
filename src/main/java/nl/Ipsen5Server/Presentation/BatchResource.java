@@ -89,7 +89,11 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 	     	
 			String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
 			
-			batch = batch.substring(0, Math.min(batch.length(), 254)); //trim the string in case it gets to long for the database
+			int minStringLengthInDatabase = 0;
+			
+			int maxStringLengthInDatabase = 254;
+			
+			batch = batch.substring(minStringLengthInDatabase, Math.min(batch.length(), maxStringLengthInDatabase)); //trim the string in case it gets to long for the database
 			
 			dao.InsertBatch(batch);
 			
