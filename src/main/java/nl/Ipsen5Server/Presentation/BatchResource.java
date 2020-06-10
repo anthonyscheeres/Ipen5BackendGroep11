@@ -1,5 +1,6 @@
 package nl.Ipsen5Server.Presentation;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -30,7 +31,7 @@ public class BatchResource {
     private Authorisation tokenUtils;
     private UserDAO user; 
     private String failedResponeMessage = "Login credentials were invalide";
-    private Jdbi jdbi;
+    
     
     private Response defaultRespone = Response.serverError()
             .entity(failedResponeMessage)
@@ -86,21 +87,75 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		
 		 new Thread(() -> {
 	     	
-	  
+			 
+			 int randomStringLength = 0;
+				
+			 String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
+			 
+			 for(int attempts = 0; attempts < 5; attempts++)
+				// keep going till it works
+				{
+				 
+				 
+				 
+				 	
+					int minStringLengthInDatabase = 0;
+					
+					int maxStringLengthInDatabase = 254;
+					
+					
+					
+					batch = batch.substring(minStringLengthInDatabase, Math.min(batch.length(), maxStringLengthInDatabase)); //trim the string in case it gets to long for the database
+					
+					
+					try {
+						
+					
+					dao.InsertBatch(batch);
+					break;
+					
+					}catch(Error e ) {
+						randomStringLength = randomStringLength + 20;
+						batch = StringUtils.getAlphaNumericString1(randomStringLength) +batch;
+						
+					}
+				 
+				 
+				 
+				}
+			 
+			
+			
+			
+			
 		
 	for (Dump excelRow : excel) {
+		try {
 		
+		
+		try {
 		dao.InsertPlatform(
 				
 				excelRow.getGenoemde_social_media()
 				
 				);
+		}
+		catch(Error e) {
+			
+		}
+		
+		try {
 		
 		dao.InsertContactPersoon(
 				
 				excelRow.getGenoemde_social_media(), 
 				excelRow.getMessage(), 
 				excelRow.getUser());
+		
+		}
+		catch(Error e) {
+			
+		}
 		
 		dao.InsertContact(
 				
@@ -112,12 +167,26 @@ public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
 		dao.UpdateInfo(
 				
 				excelRow.getPartial_IP(),
-				excelRow.getMessage()
+				excelRow.getMessage(),
+				excelRow.getGenoemde_social_media(), 
+				excelRow.getUser()
 				
 				);
 		
+		dao.InsertContactBatch(
+				
+				excelRow.getUser(), 
+				excelRow.getGenoemde_social_media(), 
+				batch
+				
+				);
+		
+		}
 		
 		
+		catch(Error e) {
+			
+		}
 	}
 	
 		   	}).start();

@@ -6,11 +6,13 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
+import nl.Ipsen5Server.Domain.Dump;
 import nl.Ipsen5Server.Domain.TokenBody;
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Service.Token;
 
+import org.jdbi.v3.core.Jdbi;
 import org.joda.time.LocalDateTime;
 import org.json.JSONObject;
 
@@ -25,7 +27,10 @@ public class UserResource {
 
     private UserDAO dao;
     private Authorisation tokenUtils; 
-    
+    private String failedResponeMessage = "Login credentials were invalide";    
+    private Response defaultRespone = Response.serverError()
+            .entity(failedResponeMessage)
+            .build();
   
     
     public UserResource(UserDAO dao, Authorisation tokenUtils) {
@@ -77,6 +82,73 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
+    
+    
+    
+    @PUT
+    @Path("/{token}/password")
+    public Response passwordUser(
+    		
+    		@PathParam("token") String token,
+    		Account user2
+    		
+    ){
+    	Response response = defaultRespone;
+    	
+    	
+    	try {
+    		
+    		
+    		
+    		String Email  = "Email";
+    		String UserPassword= "UserPassword";
+    			
+    		String NewPassword= user2.getUserPassword();
+    		  
+    		  
+    			Map<String, String> h = tokenUtils.decrypt(token)	;
+    			
+    					
+    					  String Email2 = h.get(Email);		
+    					  String UserPassword2 = h.get(UserPassword);
+    		
+    			tokenUtils.check(new Account(Email2, UserPassword2), dao);
+    		
+    			 new Thread(() -> {
+    		
+    		    		dao.changePassword(Email2, UserPassword2, NewPassword );
+    		 
+    			   	}).start();
+    		
+    		String message = "Successfull"; 
+    		
+    		Response successResponse = Response.ok(message)                      
+    	            .build();
+    		
+    		response = successResponse; //change response 
+    		
+    		
+    		}
+    		catch (NotAuthorizedException e) {
+    		
+    		}
+    		        
+    		
+    		return response;
+        
+        
+        
+        
+    }
+    
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    
+    
     
     
     /**

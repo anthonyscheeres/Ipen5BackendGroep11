@@ -70,6 +70,8 @@ public interface BatchDAO {
 
     );
 
+    
+
     /**
      *
      * @author Anthony Scheeres
@@ -79,18 +81,68 @@ public interface BatchDAO {
     @SqlUpdate(
 
 
-        "UPDATE ContactPersoon SET Info = :Info, CustomMessage = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
+        "INSERT INTO BatchContactPersoon(ContactPersoon, Batch) VALUES (CONCAT(MD5(:User), MD5(:Platform)), :Batch);"
+
+    )
+
+    void InsertContactBatch(
+
+
+            @Bind("User") String contactPersoon,
+            
+            @Bind("Platform") String platform,
+
+            @Bind("Batch") String batch
+
+    );
+    
+    
+    
+    /**
+     *
+     * @author Anthony Scheeres
+     *
+     */
+    @Transaction
+    @SqlUpdate(
+
+
+        "UPDATE ContactPersoon SET Info = :Info, OriginalPost = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
 
     )
 
     void UpdateInfo(
 
     	@Bind("CustomMessage") String message,
-        @Bind("Info") String partial_IP
+        @Bind("Info") String partial_IP,
+     
+        
+        @Bind("Platform") String platform,
+        @Bind("User") String contactPersoon
 
     );
 
 
+    /**
+     *
+     * @author Anthony Scheeres
+     *
+     */
+    @Transaction
+    @SqlUpdate(
+
+
+        "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
+
+    )
+
+    void InsertBatch(
+
+
+            @Bind("Batch") String batch
+
+    );
+    
 
 
 }

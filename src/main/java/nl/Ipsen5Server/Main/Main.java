@@ -74,6 +74,9 @@ public class Main extends Application<Settings>{
 
         Authorisation a =  new Token();// forces you to use the interfaced method
         
+        
+        //batchDAO.InsertBatch("f");
+        
         //test code here =>
 
 
