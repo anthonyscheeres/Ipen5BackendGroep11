@@ -1,47 +1,53 @@
 package nl.Ipsen5Server.Domain;
 
 public class ContactPerson {
-	private String Name;
-	private String SendMessage;
-	private String Description;
+	private String UserId;
+	private String ContactName;
+	private String OriginalPost;
+	private String CustomMessage;
 	private String SocialMedia;
-	private String UserName;
+	private String Info;
 
-	public ContactPerson(String Name, String SendMessage, String Description, String SocialMedia, String UserName) {
+	public ContactPerson(String userId, String contactName, String originalPost, String customMessage, String socialMedia, String info) {
 		super();
-		this.Name = Name;
-		this.SendMessage = SendMessage;
-		this.Description = Description;
-		this.SocialMedia = SocialMedia;
-		this.UserName = UserName;
+		this.UserId = userId;
+		this.ContactName = contactName;
+		this.OriginalPost = originalPost;
+		this.CustomMessage = customMessage;
+		this.SocialMedia = socialMedia;
+		this.Info = info;
 	}
 
-	public ContactPerson() {
-
+	public String getUserId() {
+		return UserId;
 	}
 
-	public String getName() {
-		return Name;
+	public void setUserId(String userId) {
+		UserId = userId;
 	}
 
-	public void setName(String name) {
-		Name = name;
+	public String getContactName() {
+		return ContactName;
 	}
 
-	public String getSendMessage() {
-		return SendMessage;
+	public void setContactName(String contactName) {
+		ContactName = contactName;
 	}
 
-	public void setSendMessage(String sendMessage) {
-		SendMessage = sendMessage;
+	public String getOriginalPost() {
+		return OriginalPost;
 	}
 
-	public String getDescription() {
-		return Description;
+	public void setOriginalPost(String originalPost) {
+		OriginalPost = originalPost;
 	}
 
-	public void setDescription(String description) {
-		Description = description;
+	public String getCustomMessage() {
+		return CustomMessage;
+	}
+
+	public void setCustomMessage(String customMessage) {
+		CustomMessage = customMessage;
 	}
 
 	public String getSocialMedia() {
@@ -52,11 +58,11 @@ public class ContactPerson {
 		SocialMedia = socialMedia;
 	}
 
-	public String getUserName() {
-		return UserName;
+	public String getInfo() {
+		return Info;
 	}
 
-	public void setUserName(String userName) {
-		UserName = userName;
+	public void setInfo(String info) {
+		Info = info;
 	}
 }

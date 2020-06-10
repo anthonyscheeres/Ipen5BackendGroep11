@@ -25,6 +25,19 @@ public class ContactPersonResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/all")
+    public Response getAllContactPersons() {
+        ArrayList<ContactPerson> allContactPersons = dao.getAll();
+
+        if (allContactPersons == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        return Response.ok(allContactPersons, MediaType.APPLICATION_JSON).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/id/{ContactPersonID}")
     public Response findTemplateByMessageID(
             @PathParam("ContactPersonID") String ContactPersonID) {
@@ -37,18 +50,5 @@ public class ContactPersonResource {
         }
 
         return Response.ok(contactPerson, MediaType.APPLICATION_JSON).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/all")
-    public Response getAllContactPersons() {
-        ArrayList<ContactPerson> allContactPersons = dao.getAll();
-
-        if (allContactPersons == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-
-        return Response.ok(allContactPersons, MediaType.APPLICATION_JSON).build();
     }
 }

@@ -11,11 +11,12 @@ public class ContactPersonMapper implements RowMapper<ContactPerson> {
 
     public ContactPerson map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new ContactPerson(
-                rs.getString("name"),
-                rs.getString("sendMessage"),
-                rs.getString("description"),
-                rs.getString("socialMedia"),
-                rs.getString("userName")
+                rs.getString("UserId"),
+                rs.getString("ContactName"),
+                rs.getString("OriginalPost"),
+                rs.getString("CustomMessage"),
+                rs.getString("SocialMedia"),
+                rs.getString("Info")
         );
     }
 }
