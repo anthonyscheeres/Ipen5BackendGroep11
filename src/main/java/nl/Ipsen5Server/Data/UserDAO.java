@@ -22,9 +22,16 @@ public interface UserDAO {
     ArrayList<User> getAll();
 
     @SqlQuery("SELECT * FROM Medewerker WHERE Email = :Email")
-    User getUserByEmail(@Bind("Email") String Email); 
-    
-    
+    User getUserByEmail(@Bind("Email") String Email);
+
+    @SqlUpdate("UPDATE ContactPersoon SET ContactName = :ContactName, CustomMessage = :CustomMessage, Info= :Info WHERE UserID= :UserID; ")
+    void updateByUsername(
+            @Bind("UserID") String UserID,
+            @Bind("ContactName") String ContactName,
+            @Bind("CustomMessage") String CustomMessage,
+            @Bind("Info") String Info
+    );
+
     /**
     *
     * @author Anthony Scheeres

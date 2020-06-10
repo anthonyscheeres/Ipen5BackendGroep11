@@ -77,7 +77,23 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
-    
+
+    @POST
+    @Path("/update")
+    public Response updateUser(
+            @FormParam("UserID") String UserID,
+            @FormParam("ContactName") String ContactName,
+            @FormParam("CustomMessage") String CustomMessage,
+            @FormParam("Info") String Info
+
+    ){
+        dao.updateByUsername(UserID, ContactName,CustomMessage,Info);
+
+        return Response.ok()
+                .entity("Updated Account with userid: ' " + UserID + " '  successfully")
+                .build();
+    }
+
     
     /**
     *
