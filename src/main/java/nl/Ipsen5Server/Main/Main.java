@@ -14,9 +14,11 @@ import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Dump;
 import nl.Ipsen5Server.Presentation.BatchResource;
+import nl.Ipsen5Server.Data.ContactPersonDAO;
 import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Presentation.UserResource;
+import nl.Ipsen5Server.Presentation.ContactPersonResource;
 import nl.Ipsen5Server.Service.Token;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -67,20 +69,22 @@ public class Main extends Application<Settings>{
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
         final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
         final BatchDAO batchDAO = jdbi.onDemand(BatchDAO.class);
+        final ContactPersonDAO contactPersonDAO = jdbi.onDemand(ContactPersonDAO.class);
 
-        
+
         Authorisation a =  new Token();// forces you to use the interfaced method
         
         
         //batchDAO.InsertBatch("f");
         
         //test code here =>
- 
-        
+
+
         //Initialize new resources
         environment.jersey().register(new UserResource(userDAO, a) );
         environment.jersey().register(new MessageResource(messageDAO));
         environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
+        environment.jersey().register(new ContactPersonResource(contactPersonDAO));
 
     }
 }
