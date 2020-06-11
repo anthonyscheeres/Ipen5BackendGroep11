@@ -223,7 +223,7 @@ public class BatchResource {
       );
 
      } catch (Error e) {
-
+//this row failed to insert
      }
     }
 
@@ -237,6 +237,7 @@ public class BatchResource {
 
 
   } catch (NotAuthorizedException e) {
+	  response = defaultRespone; //return this response unless changed
 
   }
 
