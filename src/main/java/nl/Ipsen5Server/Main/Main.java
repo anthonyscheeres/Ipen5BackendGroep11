@@ -20,16 +20,15 @@ import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Interfaces.InstagramBot;
 import nl.Ipsen5Server.Interfaces.KikBot;
 import nl.Ipsen5Server.Presentation.UserResource;
-import nl.Ipsen5Server.Presentation.ContactPersonResource;
-import nl.Ipsen5Server.Presentation.InstagramResource;
-import nl.Ipsen5Server.Presentation.KikResource;
 import nl.Ipsen5Server.Service.Token;
+import nl.Ipsen5Server.Presentation.ContactPersonResource;
 
-import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.jdbi.v3.core.Jdbi;
 
 public class Main extends Application<Settings>{
@@ -94,7 +93,7 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         
-        environment.jersey().register(new PlatformResource(i, k,  a));
+        environment.jersey().register(new PlatformResource(a, i, k));
  
         
 
