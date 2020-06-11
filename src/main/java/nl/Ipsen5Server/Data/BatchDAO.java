@@ -1,8 +1,11 @@
 package nl.Ipsen5Server.Data;
 
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
+
+import nl.Ipsen5Server.Domain.Dump;
 
 
 public interface BatchDAO {
@@ -142,6 +145,17 @@ public interface BatchDAO {
             @Bind("Batch") String batch
 
     );
+
+    @SqlQuery(
+
+           "SELECT * FROM BatchContactPersoon"
+           + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
+           + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
+           + " left join Contact on Contact.Username = ContactPersoon.UserID"
+           + " left join Platform on Contact.Platform = Platform.PlatformName; "
+    		
+        )
+	Dump[] SelectBatches();
     
 
 
