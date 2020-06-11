@@ -15,6 +15,7 @@ import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Presentation.BatchResource;
 import nl.Ipsen5Server.Data.ContactPersonDAO;
 import nl.Ipsen5Server.Presentation.MessageResource;
+import nl.Ipsen5Server.Presentation.PlatformResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Interfaces.InstagramBot;
 import nl.Ipsen5Server.Interfaces.KikBot;
@@ -93,7 +94,7 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         
-        environment.jersey().register(new SendMessageResource(i, k,  a));
+        environment.jersey().register(new PlatformResource(i, k,  a));
  
         
 
