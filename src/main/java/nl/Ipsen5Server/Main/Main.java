@@ -20,6 +20,7 @@ import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Interfaces.InstagramBot;
 import nl.Ipsen5Server.Interfaces.KikBot;
 import nl.Ipsen5Server.Presentation.UserResource;
+import nl.Ipsen5Server.Service.InstagramService;
 import nl.Ipsen5Server.Service.Token;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 
@@ -76,7 +77,7 @@ public class Main extends Application<Settings>{
 
 
         Authorisation a =  new Token();// forces you to use the interfaced method
-        InstagramBot i = null ; //TODO: implement method 
+        InstagramBot i = new InstagramService() ; //TODO: implement method 
         KikBot k = null ; //TODO: implement method 
         
         
