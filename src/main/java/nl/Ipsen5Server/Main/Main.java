@@ -76,9 +76,9 @@ public class Main extends Application<Settings>{
         final ContactPersonDAO contactPersonDAO = jdbi.onDemand(ContactPersonDAO.class);
 
 
-        Authorisation a =  new Token();// forces you to use the interfaced method
-        InstagramBot i = new InstagramService() ; //TODO: implement method 
-        KikBot k = null ; //TODO: implement method 
+        Authorisation author =  new Token();// forces you to use the interfaced method
+        InstagramBot insta = new InstagramService() ; //TODO: implement method 
+        KikBot kik = null ; //TODO: implement method 
         
         
         //test code here =>
@@ -89,12 +89,12 @@ public class Main extends Application<Settings>{
         
         
         
-        environment.jersey().register(new UserResource(userDAO, a) );
+        environment.jersey().register(new UserResource(userDAO, author) );
         environment.jersey().register(new MessageResource(messageDAO));
-        environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
+        environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         
-        environment.jersey().register(new PlatformResource(a, i, k));
+        environment.jersey().register(new PlatformResource(author, insta, kik));
  
         
 
