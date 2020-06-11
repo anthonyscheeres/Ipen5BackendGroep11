@@ -1,20 +1,13 @@
 package nl.Ipsen5Server.Presentation;
 
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
-import nl.Ipsen5Server.Domain.Dump;
 import nl.Ipsen5Server.Domain.TokenBody;
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Service.Token;
 
-import org.jdbi.v3.core.Jdbi;
-import org.joda.time.LocalDateTime;
-import org.json.JSONObject;
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

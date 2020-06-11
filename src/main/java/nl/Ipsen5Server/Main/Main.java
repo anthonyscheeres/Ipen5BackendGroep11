@@ -1,7 +1,6 @@
 package nl.Ipsen5Server.Main;
 
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
@@ -12,13 +11,17 @@ import io.dropwizard.server.DefaultServerFactory;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Data.UserDAO;
-import nl.Ipsen5Server.Domain.Dump;
+
 import nl.Ipsen5Server.Presentation.BatchResource;
 import nl.Ipsen5Server.Data.ContactPersonDAO;
 import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
+import nl.Ipsen5Server.Interfaces.InstagramBot;
+import nl.Ipsen5Server.Interfaces.KikBot;
 import nl.Ipsen5Server.Presentation.UserResource;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
+import nl.Ipsen5Server.Presentation.InstagramResource;
+import nl.Ipsen5Server.Presentation.KikResource;
 import nl.Ipsen5Server.Service.Token;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -73,18 +76,26 @@ public class Main extends Application<Settings>{
 
 
         Authorisation a =  new Token();// forces you to use the interfaced method
+        InstagramBot i = null ; //TODO: implement method 
+        KikBot k = null ; //TODO: implement method 
         
-        
-        //batchDAO.InsertBatch("f");
         
         //test code here =>
 
 
         //Initialize new resources
+        
+        
+        
+        
         environment.jersey().register(new UserResource(userDAO, a) );
         environment.jersey().register(new MessageResource(messageDAO));
         environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
+        
+        environment.jersey().register(new SendMessageResource(i, k,  a));
+ 
+        
 
     }
 }
