@@ -1,6 +1,9 @@
 package nl.Ipsen5Server.Main;
 
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
@@ -17,6 +20,7 @@ import nl.Ipsen5Server.Presentation.BatchResource;
 import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 import nl.Ipsen5Server.Presentation.UserResource;
+import nl.Ipsen5Server.Service.APIstarter;
 import nl.Ipsen5Server.Service.Token;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -42,8 +46,9 @@ public class Main extends Application<Settings>{
 
     @Override
     public void run(Settings settings, Environment environment) throws Exception {
-
-        //standard database initalaizations
+        APIstarter kikAPI = new APIstarter();
+        kikAPI.SendMessageKik("HALLO", new ArrayList<>());
+        //standard database initializations
         final JdbiFactory factory = new JdbiFactory();
         final DefaultServerFactory serverFactory = (DefaultServerFactory) settings.getServerFactory();
         final Jdbi jdbi = factory.build(environment, settings.getDataSourceFactory(), "mariadb");
@@ -83,4 +88,5 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
 
     }
+
 }
