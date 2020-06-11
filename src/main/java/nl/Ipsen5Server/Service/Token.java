@@ -68,7 +68,9 @@ public class Token implements Authorisation{
         
         if (isAutherised!=true_) { 
         	
-        	throw new NotAuthorizedException(null);
+        	String message = "Wrong username or password";
+        	
+        	throw new NotAuthorizedException(message);
         	
         }
 		

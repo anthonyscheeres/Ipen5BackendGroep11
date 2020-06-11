@@ -22,9 +22,16 @@ public interface UserDAO {
     ArrayList<User> getAll();
 
     @SqlQuery("SELECT * FROM Medewerker WHERE Email = :Email")
-    User getUserByEmail(@Bind("Email") String Email); 
-    
-    
+    User getUserByEmail(@Bind("Email") String Email);
+
+    @SqlUpdate("UPDATE ContactPersoon SET ContactName = :ContactName, CustomMessage = :CustomMessage, Info= :Info WHERE UserID= :UserID; ")
+    void updateByUsername(
+            @Bind("UserID") String UserID,
+            @Bind("ContactName") String ContactName,
+            @Bind("CustomMessage") String CustomMessage,
+            @Bind("Info") String Info
+    );
+
     /**
     *
     * @author Anthony Scheeres
@@ -39,6 +46,15 @@ public interface UserDAO {
     */
     @SqlQuery("SELECT Usertype FROM Mederwerker WHERE Email = :Email)")
 	String getRoleByEmail(@Bind("Email") String email);
+
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    @SqlUpdate("UPDATE Medewerker SET UserPassword = :NewUserPassword WHERE UserPassword = :UserPassword")
+	void changePassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword, @Bind("NewUserPassword") String NewPassword);
 
 
 }
