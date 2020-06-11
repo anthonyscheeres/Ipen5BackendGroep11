@@ -109,10 +109,10 @@ public class BatchResource {
   *
   */
  @POST
- @Path("/{token}/upload")
+ @Path("/{token}/upload/{bestandsNaam}")
  @Consumes(MediaType.APPLICATION_JSON)
  @Produces(MediaType.TEXT_PLAIN)
- public Response uploadDump(Dump[] excel, @PathParam("token") String token) {
+ public Response uploadDump(Dump[] excel, @PathParam("token") String token, @PathParam("bestandsNaam") String bestandsNaam) {
   Response response = defaultRespone; //return this response unless changed
 
 
@@ -121,9 +121,6 @@ public class BatchResource {
    String Email = "Email";
    String UserPassword = "UserPassword";
 
-
-
-
    Map < String, String > credentials = tokenUtils.decrypt(token);
 
 
@@ -131,48 +128,44 @@ public class BatchResource {
    UserPassword = credentials.get(UserPassword);
 
    tokenUtils.check(new Account(Email, UserPassword), user);
+   
+   String message = "Successfully created";
+   
+
+   Response successResponse = Response.ok(message) //Initialize success response and pass the token
+    .build();
 
 
+   
+   response = successResponse; //change response 
+   
+   
+   
+   
+   try {
 
+	      dao.InsertBatch(bestandsNaam);
+	    
 
+	     } catch (Error e) {
+
+	    	 Response fillNameNotRightResponse = Response.serverError()
+	    	  .entity(failedResponeMessage)
+	    	  .build();
+	    	 
+	    	 response = fillNameNotRightResponse;
+	    	 
+	    	 return response; 
+	    	 
+	     }
+   
    new Thread(() -> {
 
 
-    int randomStringLength = 0;
-
-    String batch = Base64.getEncoder().encodeToString(excel.toString().getBytes());
-
-    for (int attempts = 0; attempts < 5; attempts++)
-    // keep going till it works
-    {
 
 
 
-
-     int minStringLengthInDatabase = 0;
-
-     int maxStringLengthInDatabase = 254;
-
-
-
-     batch = batch.substring(minStringLengthInDatabase, Math.min(batch.length(), maxStringLengthInDatabase)); //trim the string in case it gets to long for the database
-
-
-     try {
-
-
-      dao.InsertBatch(batch);
-      break;
-
-     } catch (Error e) {
-      randomStringLength = randomStringLength + 20;
-      batch = StringUtils.getAlphaNumericString1(randomStringLength) + batch;
-
-     }
-
-
-
-    }
+    
 
 
 
@@ -225,26 +218,26 @@ public class BatchResource {
 
        excelRow.getUser(),
        excelRow.getGenoemde_social_media(),
-       batch
+       bestandsNaam
 
       );
 
      } catch (Error e) {
-
+//this row failed to insert
      }
     }
 
    }).start();
 
-   String message = "Successfully created";
 
-   Response successResponse = Response.ok(message) //Initialize success response and pass the token
-    .build();
+
+
 
    response = successResponse; //change response 
 
 
   } catch (NotAuthorizedException e) {
+	  response = defaultRespone; //return this response unless changed
 
   }
 

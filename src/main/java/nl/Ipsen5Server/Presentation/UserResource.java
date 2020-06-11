@@ -115,11 +115,11 @@ public class UserResource {
     		String NewPassword= user2.getUserPassword();
     		  
     		  
-    			Map<String, String> h = tokenUtils.decrypt(token)	;
+    			Map<String, String> credentials = tokenUtils.decrypt(token)	;
     			
     					
-    					  String Email2 = h.get(Email);		
-    					  String UserPassword2 = h.get(UserPassword);
+    					  String Email2 = credentials.get(Email);		
+    					  String UserPassword2 = credentials.get(UserPassword);
     		
     			tokenUtils.check(new Account(Email2, UserPassword2), dao);
     		
