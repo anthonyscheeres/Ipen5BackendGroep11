@@ -1,7 +1,6 @@
 package nl.Ipsen5Server.Main;
 
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
@@ -12,18 +11,25 @@ import io.dropwizard.server.DefaultServerFactory;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Data.UserDAO;
-import nl.Ipsen5Server.Domain.Dump;
-import nl.Ipsen5Server.Presentation.BatchResource;
-import nl.Ipsen5Server.Presentation.MessageResource;
-import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Presentation.UserResource;
-import nl.Ipsen5Server.Service.Token;
 
-import org.eclipse.jetty.servlets.CrossOriginFilter;
+import nl.Ipsen5Server.Presentation.BatchResource;
+import nl.Ipsen5Server.Data.ContactPersonDAO;
+import nl.Ipsen5Server.Presentation.MessageResource;
+import nl.Ipsen5Server.Presentation.PlatformResource;
+import nl.Ipsen5Server.Interfaces.Authorisation;
+import nl.Ipsen5Server.Interfaces.InstagramBot;
+import nl.Ipsen5Server.Interfaces.KikBot;
+import nl.Ipsen5Server.Presentation.UserResource;
+import nl.Ipsen5Server.Service.InstagramService;
+import nl.Ipsen5Server.Service.Token;
+import nl.Ipsen5Server.Presentation.ContactPersonResource;
+
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.jdbi.v3.core.Jdbi;
 
 public class Main extends Application<Settings>{
@@ -67,17 +73,30 @@ public class Main extends Application<Settings>{
         final UserDAO userDAO = jdbi.onDemand(UserDAO.class);
         final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
         final BatchDAO batchDAO = jdbi.onDemand(BatchDAO.class);
+        final ContactPersonDAO contactPersonDAO = jdbi.onDemand(ContactPersonDAO.class);
 
+
+        Authorisation author =  new Token();// forces you to use the interfaced method
+        InstagramBot insta = new InstagramService() ; //TODO: implement method 
+        KikBot kik = null ; //TODO: implement method 
         
-        Authorisation a =  new Token();// forces you to use the interfaced method
         
         //test code here =>
+
+
+        //Initialize new resources
+        
+        
+        
+        
+        environment.jersey().register(new UserResource(userDAO, author) );
+        environment.jersey().register(new MessageResource(messageDAO));
+        environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
+        environment.jersey().register(new ContactPersonResource(contactPersonDAO));
+        
+        environment.jersey().register(new PlatformResource(author, insta, kik));
  
         
-        //Initialize new resources
-        environment.jersey().register(new UserResource(userDAO, a) );
-        environment.jersey().register(new MessageResource(messageDAO));
-        environment.jersey().register(new BatchResource(batchDAO, a, userDAO) );
 
     }
 }

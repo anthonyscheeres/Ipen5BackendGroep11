@@ -47,6 +47,15 @@ public interface UserDAO {
     @SqlQuery("SELECT Usertype FROM Mederwerker WHERE Email = :Email)")
 	String getRoleByEmail(@Bind("Email") String email);
 
+    
+    /**
+    *
+    * @author Anthony Scheeres
+    *
+    */
+    @SqlUpdate("UPDATE Medewerker SET UserPassword = :NewUserPassword WHERE UserPassword = :UserPassword")
+	void changePassword(@Bind("Email") String Email, @Bind("UserPassword") String UserPassword, @Bind("NewUserPassword") String NewPassword);
+
 
 }
 

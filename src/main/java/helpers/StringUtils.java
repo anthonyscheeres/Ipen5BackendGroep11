@@ -8,7 +8,10 @@ public class StringUtils {
 	// function to generate a random string of length n 
 	 public static String getAlphaNumericString1(int n)
 	 { 
-
+		 if (n == 0) {
+			 return null;
+		 }
+		 
 	     // chose a Character random from this String 
 	     String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	                                 + "0123456789"
