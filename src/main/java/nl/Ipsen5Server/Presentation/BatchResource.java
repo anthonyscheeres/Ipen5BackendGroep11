@@ -161,17 +161,6 @@ public class BatchResource {
    
    new Thread(() -> {
 
-
-
-
-
-    
-
-
-
-
-
-
     for (Dump excelRow: excel) {
      try {
 

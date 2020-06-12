@@ -15,12 +15,10 @@ import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Presentation.BatchResource;
 import nl.Ipsen5Server.Data.ContactPersonDAO;
 import nl.Ipsen5Server.Presentation.MessageResource;
-import nl.Ipsen5Server.Presentation.PlatformResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Interfaces.InstagramBot;
-import nl.Ipsen5Server.Interfaces.KikBot;
+
 import nl.Ipsen5Server.Presentation.UserResource;
-import nl.Ipsen5Server.Service.InstagramService;
+
 import nl.Ipsen5Server.Service.Token;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 
@@ -77,8 +75,7 @@ public class Main extends Application<Settings>{
 
 
         Authorisation author =  new Token();// forces you to use the interfaced method
-        InstagramBot insta = new InstagramService() ; //TODO: implement method 
-        KikBot kik = null ; //TODO: implement method 
+
         
         
         //test code here =>
@@ -94,7 +91,6 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         
-        environment.jersey().register(new PlatformResource(author, insta, kik));
  
         
 
