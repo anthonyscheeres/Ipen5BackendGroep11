@@ -1,6 +1,9 @@
 package nl.Ipsen5Server.Presentation;
 
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -109,7 +112,7 @@ public class BatchResource {
  @Path("/{token}/upload/{bestandsNaam}")
  @Consumes(MediaType.APPLICATION_JSON)
  @Produces(MediaType.TEXT_PLAIN)
- public Response uploadDump(Dump[] excel, @PathParam("token") String token, @PathParam("bestandsNaam") String bestandsNaam) {
+ public Response uploadDump(List<Dump> excel, @PathParam("token") String token, @PathParam("bestandsNaam") String bestandsNaam) {
   Response response = defaultRespone; //return this response unless changed
 
 
@@ -144,7 +147,7 @@ public class BatchResource {
 	      dao.InsertBatch(bestandsNaam);
 	    
 
-	     } catch (Error e) {
+	     } catch (SQLException e) {
 
 	    	 Response fillNameNotRightResponse = Response.serverError()
 	    	  .entity(failedResponeMessage)
@@ -168,11 +171,13 @@ public class BatchResource {
         excelRow.getGenoemde_social_media()
 
        );
-      } catch (Error e) {
+       
+      } catch (SQLException e) {
 
+    	  
       }
 
-      try {
+     try {
 
        dao.InsertContactPersoon(
 
@@ -180,7 +185,7 @@ public class BatchResource {
         excelRow.getMessage(),
         excelRow.getUser());
 
-      } catch (Error e) {
+      } catch (SQLException e) {
 
       }
 
@@ -208,7 +213,7 @@ public class BatchResource {
 
       );
 
-     } catch (Error e) {
+    } catch (SQLException e) {
 //this row failed to insert
      }
     }

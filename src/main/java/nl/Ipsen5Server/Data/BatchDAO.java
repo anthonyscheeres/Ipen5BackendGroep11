@@ -1,5 +1,7 @@
 package nl.Ipsen5Server.Data;
 
+import java.sql.SQLException;
+
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -27,7 +29,7 @@ public interface BatchDAO {
 
         @Bind("Platform") String genoemde_social_media
 
-    );
+    	    ) throws  SQLException;
 
     /**
      *
@@ -41,7 +43,7 @@ public interface BatchDAO {
 
     )
 
-    void InsertContactPersoon(
+    void InsertContactPersoon (
 
 
         @Bind("Platform") String genoemde_social_media,
@@ -50,7 +52,7 @@ public interface BatchDAO {
         
         @Bind("User") String user
 
-    );
+    ) throws  SQLException;
 
     /**
      *
@@ -71,7 +73,7 @@ public interface BatchDAO {
 
         @Bind("User") String user
 
-    );
+    	    ) throws  SQLException;
 
     
 
@@ -97,7 +99,7 @@ public interface BatchDAO {
 
             @Bind("Batch") String batch
 
-    );
+    	    ) throws  SQLException;
     
     
     
@@ -123,7 +125,7 @@ public interface BatchDAO {
         @Bind("Platform") String platform,
         @Bind("User") String contactPersoon
 
-    );
+    	    ) throws  SQLException;
 
 
     /**
@@ -137,14 +139,14 @@ public interface BatchDAO {
 
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
-    )
+    ) 
 
     void InsertBatch(
 
 
             @Bind("Batch") String batch
 
-    );
+    	    ) throws  SQLException;
 
     @SqlQuery(
 
@@ -155,7 +157,7 @@ public interface BatchDAO {
            + " left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
-	Dump[] SelectBatches();
+	Dump[] SelectBatches() ;
     
 
 
