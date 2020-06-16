@@ -1,9 +1,8 @@
 package nl.Ipsen5Server.Presentation;
 
-import java.util.Base64;
-import java.util.HashMap;
+
 import java.util.Map;
-import java.util.logging.Level;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,16 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jdbi.v3.core.Jdbi;
 
-import helpers.StringUtils;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Domain.Dump;
-import nl.Ipsen5Server.Domain.TokenBody;
+
 import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Service.Token;
+
 
 @Path("/batch")
 public class BatchResource {
