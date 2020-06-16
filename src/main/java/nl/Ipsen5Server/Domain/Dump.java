@@ -19,6 +19,16 @@ public class Dump {
 		this.message = message;
 	}
 
+	
+	
+	
+	public Dump() {
+		super();
+	}
+
+
+
+
 	public String getUser() {
 		return user;
 	}
