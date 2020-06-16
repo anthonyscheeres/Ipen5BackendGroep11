@@ -155,12 +155,12 @@ public class UserResource {
 		   String UserPassword2 = credentials.get(UserPassword);
 
 		   tokenUtils.check(new Account(Email3, UserPassword2), dao);
-  dao.deleteByEmail(Email);
+		   dao.deleteByEmail(Email);
   
 
-  return Response.ok()
-   .entity("Deleted account with email: ' " + Email + " '  successfully")
-   .build();
+		   return Response.ok()
+				   .entity("Deleted account with email: ' " + Email + " '  successfully")
+				   .build();
 	 } catch (NotAuthorizedException e) {
 
 	  }
@@ -200,14 +200,14 @@ public class UserResource {
 
 	 
 	 
-  dao.updateByUsername(UserID, ContactName, CustomMessage, Info);
+		   dao.updateByUsername(UserID, ContactName, CustomMessage, Info);
 
   
   
   
-  return Response.ok()
-   .entity("Updated Account with userid: ' " + UserID + " '  successfully")
-   .build();
+		   return Response.ok()
+				   .entity("Updated Account with userid: ' " + UserID + " '  successfully")
+				   .build();
   
   
 	 } catch (NotAuthorizedException e) {
