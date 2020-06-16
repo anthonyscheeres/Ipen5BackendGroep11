@@ -47,7 +47,12 @@ public class Main extends Application<Settings>{
     @Override
     public void run(Settings settings, Environment environment) throws Exception {
         APIstarter kikAPI = new APIstarter();
-        kikAPI.SendMessageKik("HALLO", new ArrayList<>());
+        kikAPI.SendMessageKik("HALLO YO YO YOGHURTTTTTTTTTTTTTTTTT", new ArrayList<String>(){{
+            add("SuleyyNL");
+            add("CKMOfficial1");
+            add("THREE");
+            add("FOUR");
+        }});
         //standard database initializations
         final JdbiFactory factory = new JdbiFactory();
         final DefaultServerFactory serverFactory = (DefaultServerFactory) settings.getServerFactory();
