@@ -19,6 +19,7 @@ import nl.Ipsen5Server.Presentation.MessageResource;
 import nl.Ipsen5Server.Interfaces.Authorisation;
 
 import nl.Ipsen5Server.Presentation.UserResource;
+
 import nl.Ipsen5Server.Service.Token;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 
@@ -75,6 +76,7 @@ public class Main extends Application<Settings>{
 
 
         Authorisation author =  new Token();// forces you to use the interfaced method
+
      
         
         //test code here =>
