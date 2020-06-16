@@ -39,7 +39,7 @@ public interface BatchDAO {
     @Transaction
     @SqlUpdate(
     		
-        "INSERT INTO ContactPersoon(UserID, CustomMessage) VALUES (CONCAT(MD5(:User), MD5(:Platform)), :CustomMessage); "
+        "INSERT INTO ContactPersoon(UserID, CustomMessage) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg'); "
 
     )
 
@@ -47,8 +47,7 @@ public interface BatchDAO {
 
 
         @Bind("Platform") String genoemde_social_media,
-        
-        @Bind("CustomMessage") String message,
+
         
         @Bind("User") String user
 

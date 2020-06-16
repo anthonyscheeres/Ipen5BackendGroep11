@@ -182,7 +182,7 @@ public class BatchResource {
        dao.InsertContactPersoon(
 
         excelRow.getGenoemde_social_media(),
-        excelRow.getMessage(),
+     
         excelRow.getUser());
 
       } catch (SQLException e) {
