@@ -99,7 +99,18 @@ public class BatchResource {
 
  }
 
-
+ /**
+ *
+ * @author Anthony Scheeres
+ *
+ */
+@GET
+@Path("/Batch")
+@Produces(MediaType.APPLICATION_JSON)
+public Dump[] selectBatches() {
+	return dao.SelectBatchNames();
+	
+}
 
  /**
   *
