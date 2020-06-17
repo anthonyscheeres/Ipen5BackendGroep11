@@ -171,6 +171,7 @@ public class BatchResource {
     	  
       }
 
+      
      try {
 
        dao.InsertContactPersoon(
