@@ -5,14 +5,10 @@ package nl.Ipsen5Server.Domain;
 *
 */
 public class Dump {
-	
 
-
-	private String user;	
-
+	private String user;
 	private String partial_IP;	
-	private String genoemde_social_media;	
-
+	private String genoemde_social_media;
 	private String message;
 
 	public Dump(String user, String partial_IP, String genoemde_social_media, String message) {
