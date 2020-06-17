@@ -2,17 +2,19 @@ package nl.Ipsen5Server.Data;
 
 import java.sql.SQLException;
 
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 
 import nl.Ipsen5Server.Domain.Dump;
 
-
+@JsonView
 public interface BatchDAO {
 
 
@@ -149,38 +151,6 @@ public interface BatchDAO {
             @Bind("Batch") String batch
 
     	    ) throws  SQLException;
-
-    @SqlQuery(
-
-           "SELECT * FROM BatchContactPersoon"
-           + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
-           + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
-           + " left join Contact on Contact.Username = ContactPersoon.UserID"
-           + " left join Platform on Contact.Platform = Platform.PlatformName; "
-    		
-        )
-    JSONObject SelectBatches() ;
-    
-    
-
-  
-   @SqlQuery(
-
-          "SELECT * FROM BatchContactPersoon"
-          + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
-          + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
-          + " left join Contact on Contact.Username = ContactPersoon.UserID"
-          + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
-   		
-       )
-   JSONObject SelectSpecificBatches(
-			
-			 @Bind("Batch") String batch
-			) ;
-
-   @JSONP
-   @SqlQuery("SELECT * FROM Batch;")
-   JSONObject SelectBatchNames();
 
 
 }
