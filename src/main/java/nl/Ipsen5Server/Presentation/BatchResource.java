@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
 
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
@@ -67,8 +68,8 @@ public class BatchResource {
  @GET
  @Path("/{token}/show")
  @Produces(MediaType.APPLICATION_JSON)
- public Dump[] showBatches(@PathParam("token") String token) {
-  Dump[] response = null;
+ public JSONObject showBatches(@PathParam("token") String token) {
+  JSONObject response = null;
 
   try {
 
@@ -99,9 +100,58 @@ public class BatchResource {
 
  }
 
+ /**
+ *
+ * @author Anthony Scheeres
+ *
+ */
+@GET
+@Path("/BatchID")
+public JSONObject selectBatches() {
+	return dao.SelectBatchNames();
+	
+}
+
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/showBatch/{id}/")
+ public JSONObject selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  JSONObject response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectSpecificBatches(id);
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
 
 
 
+ }
+
+
+
+
+ 
 
  /**
   *
