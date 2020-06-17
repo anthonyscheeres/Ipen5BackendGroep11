@@ -6,6 +6,9 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
+import org.json.JSONObject;
+
+import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 
 import nl.Ipsen5Server.Domain.Dump;
 
@@ -156,11 +159,11 @@ public interface BatchDAO {
            + " left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
-	String SelectBatches() ;
+    JSONObject SelectBatches() ;
     
     
 
-
+  
    @SqlQuery(
 
           "SELECT * FROM BatchContactPersoon"
@@ -170,13 +173,14 @@ public interface BatchDAO {
           + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
    		
        )
-	String SelectSpecificBatches(
+   JSONObject SelectSpecificBatches(
 			
 			 @Bind("Batch") String batch
 			) ;
 
+   @JSONP
    @SqlQuery("SELECT * FROM Batch;")
-String SelectBatchNames();
+   JSONObject SelectBatchNames();
 
 
 }
