@@ -1,20 +1,13 @@
 package nl.Ipsen5Server.Presentation;
 
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
+
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
-import nl.Ipsen5Server.Domain.Dump;
 import nl.Ipsen5Server.Domain.TokenBody;
 import nl.Ipsen5Server.Domain.User;
 import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Service.Token;
 
-import org.jdbi.v3.core.Jdbi;
-import org.joda.time.LocalDateTime;
-import org.json.JSONObject;
+
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -82,7 +75,23 @@ public class UserResource {
                 .entity("Deleted account with email: ' " + Email + " '  successfully")
                 .build();
     }
-    
+
+    @POST
+    @Path("/update")
+    public Response updateUser(
+            @FormParam("UserID") String UserID,
+            @FormParam("ContactName") String ContactName,
+            @FormParam("CustomMessage") String CustomMessage,
+            @FormParam("Info") String Info
+
+    ){
+        dao.updateByUsername(UserID, ContactName,CustomMessage,Info);
+
+        return Response.ok()
+                .entity("Updated Account with userid: ' " + UserID + " '  successfully")
+                .build();
+    }
+
     
     
     @PUT
@@ -106,11 +115,11 @@ public class UserResource {
     		String NewPassword= user2.getUserPassword();
     		  
     		  
-    			Map<String, String> h = tokenUtils.decrypt(token)	;
+    			Map<String, String> credentials = tokenUtils.decrypt(token)	;
     			
     					
-    					  String Email2 = h.get(Email);		
-    					  String UserPassword2 = h.get(UserPassword);
+    					  String Email2 = credentials.get(Email);		
+    					  String UserPassword2 = credentials.get(UserPassword);
     		
     			tokenUtils.check(new Account(Email2, UserPassword2), dao);
     		
