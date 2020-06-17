@@ -158,6 +158,25 @@ public interface BatchDAO {
         )
 	Dump[] SelectBatches() ;
     
+    
+
+
+   @SqlQuery(
+
+          "SELECT * FROM BatchContactPersoon"
+          + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
+          + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
+          + " left join Contact on Contact.Username = ContactPersoon.UserID"
+          + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
+   		
+       )
+	Dump[] SelectSpecificBatches(
+			
+			 @Bind("Batch") String batch
+			) ;
+
+   @SqlQuery("SELECT * FROM Batch;")
+Dump[] SelectBatchNames();
 
 
 }
