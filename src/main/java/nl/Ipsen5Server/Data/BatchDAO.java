@@ -39,7 +39,7 @@ public interface BatchDAO {
     @Transaction
     @SqlUpdate(
     		
-        "INSERT INTO ContactPersoon(UserID, CustomMessage) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg'); "
+        "INSERT INTO ContactPersoon(UserID, CustomMessage, ContactName) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg', :User); "
 
     )
 
@@ -156,7 +156,7 @@ public interface BatchDAO {
            + " left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
-	Dump[] SelectBatches() ;
+	String SelectBatches() ;
     
     
 
@@ -170,13 +170,13 @@ public interface BatchDAO {
           + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
    		
        )
-	Dump[] SelectSpecificBatches(
+	String SelectSpecificBatches(
 			
 			 @Bind("Batch") String batch
 			) ;
 
    @SqlQuery("SELECT * FROM Batch;")
-Dump[] SelectBatchNames();
+String SelectBatchNames();
 
 
 }

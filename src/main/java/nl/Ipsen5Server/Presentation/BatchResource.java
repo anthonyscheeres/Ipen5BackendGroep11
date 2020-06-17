@@ -67,8 +67,8 @@ public class BatchResource {
  @GET
  @Path("/{token}/show")
  @Produces(MediaType.APPLICATION_JSON)
- public Dump[] showBatches(@PathParam("token") String token) {
-  Dump[] response = null;
+ public String showBatches(@PathParam("token") String token) {
+  String response = null;
 
   try {
 
@@ -105,9 +105,8 @@ public class BatchResource {
  *
  */
 @GET
-@Path("/Batch")
-@Produces(MediaType.APPLICATION_JSON)
-public Dump[] selectBatches() {
+@Path("/BatchID")
+public String selectBatches() {
 	return dao.SelectBatchNames();
 	
 }
@@ -119,9 +118,8 @@ public Dump[] selectBatches() {
   */
  @GET
  @Path("/{token}/showBatch/{id}/")
- @Produces(MediaType.APPLICATION_JSON)
- public Dump[] selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
-  Dump[] response = null;
+ public String selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  String response = null;
 
   try {
 
