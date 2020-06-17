@@ -14,7 +14,7 @@ import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 
 import nl.Ipsen5Server.Domain.Dump;
 
-@JsonView
+
 public interface BatchDAO {
 
 
