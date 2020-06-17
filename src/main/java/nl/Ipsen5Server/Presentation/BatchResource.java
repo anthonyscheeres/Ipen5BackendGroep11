@@ -7,13 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.NotAuthorizedException;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -238,4 +232,43 @@ public class BatchResource {
   return response;
  }
 
+
+   @POST
+   @Path("/{token}/deleteAllBatches")
+   public Response deleteUser(
+           @PathParam("token") String token
+   ){
+
+    String Email = "Email";
+    String UserPassword = "UserPassword";
+
+    Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+    Email = credentials.get(Email);
+    UserPassword = credentials.get(UserPassword);
+
+    tokenUtils.check(new Account(Email, UserPassword), user);
+
+    String message = "Successfully deleted";
+
+    Response successResponse = Response.ok(message) //Initialize success response and pass the token
+            .build();
+
+
+    try {
+
+      dao.deleteAllBatchContacts();
+      dao.deleteAllBatches();
+
+
+      return Response.ok()
+              .entity("Deleted all batches successfully")
+              .build();
+     } catch (NotAuthorizedException e) {
+
+     }
+     return defaultRespone;
+
+    }
 }

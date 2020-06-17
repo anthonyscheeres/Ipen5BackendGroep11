@@ -157,7 +157,14 @@ public interface BatchDAO {
     		
         )
 	Dump[] SelectBatches() ;
-    
 
+
+    @SqlUpdate("DELETE FROM BatchContactPersoon;")
+    void deleteAllBatchContacts(
+    );
+
+    @SqlUpdate("DELETE FROM Batch;")
+    void deleteAllBatches(
+    );
 
 }
