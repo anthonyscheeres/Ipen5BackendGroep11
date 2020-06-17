@@ -1,13 +1,20 @@
 package nl.Ipsen5Server.Data;
 
+import java.sql.SQLException;
+
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
+import org.json.JSONObject;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
 
 import nl.Ipsen5Server.Domain.Dump;
 
-
+@JsonView
 public interface BatchDAO {
 
 
@@ -27,7 +34,7 @@ public interface BatchDAO {
 
         @Bind("Platform") String genoemde_social_media
 
-    );
+    	    ) throws  SQLException;
 
     /**
      *
@@ -37,20 +44,19 @@ public interface BatchDAO {
     @Transaction
     @SqlUpdate(
     		
-        "INSERT INTO ContactPersoon(UserID, CustomMessage) VALUES (CONCAT(MD5(:User), MD5(:Platform)), :CustomMessage); "
+        "INSERT INTO ContactPersoon(UserID, CustomMessage, ContactName) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg', :User); "
 
     )
 
-    void InsertContactPersoon(
+    void InsertContactPersoon (
 
 
         @Bind("Platform") String genoemde_social_media,
-        
-        @Bind("CustomMessage") String message,
+
         
         @Bind("User") String user
 
-    );
+    ) throws  SQLException;
 
     /**
      *
@@ -71,7 +77,7 @@ public interface BatchDAO {
 
         @Bind("User") String user
 
-    );
+    	    ) throws  SQLException;
 
     
 
@@ -97,7 +103,7 @@ public interface BatchDAO {
 
             @Bind("Batch") String batch
 
-    );
+    	    ) throws  SQLException;
     
     
     
@@ -123,7 +129,7 @@ public interface BatchDAO {
         @Bind("Platform") String platform,
         @Bind("User") String contactPersoon
 
-    );
+    	    ) throws  SQLException;
 
 
     /**
@@ -137,26 +143,14 @@ public interface BatchDAO {
 
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
-    )
+    ) 
 
     void InsertBatch(
 
 
             @Bind("Batch") String batch
 
-    );
-
-    @SqlQuery(
-
-           "SELECT * FROM BatchContactPersoon"
-           + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
-           + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
-           + " left join Contact on Contact.Username = ContactPersoon.UserID"
-           + " left join Platform on Contact.Platform = Platform.PlatformName; "
-    		
-        )
-	Dump[] SelectBatches();
-    
+    	    ) throws  SQLException;
 
 
 }

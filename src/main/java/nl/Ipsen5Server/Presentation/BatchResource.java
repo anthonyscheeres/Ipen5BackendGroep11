@@ -1,9 +1,11 @@
 package nl.Ipsen5Server.Presentation;
 
-import java.util.Base64;
-import java.util.HashMap;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,16 +17,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jdbi.v3.core.Jdbi;
+import org.json.JSONObject;
 
-import helpers.StringUtils;
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Domain.Dump;
-import nl.Ipsen5Server.Domain.TokenBody;
+
 import nl.Ipsen5Server.Interfaces.Authorisation;
-import nl.Ipsen5Server.Service.Token;
+
 
 @Path("/batch")
 public class BatchResource {
@@ -57,51 +58,7 @@ public class BatchResource {
 
 
 
-
-
- /**
-  *
-  * @author Anthony Scheeres
-  *
-  */
- @GET
- @Path("/{token}/show")
- @Produces(MediaType.APPLICATION_JSON)
- public Dump[] showBatches(@PathParam("token") String token) {
-  Dump[] response = null;
-
-  try {
-
-   String Email = "Email";
-   String UserPassword = "UserPassword";
-
-   Map < String, String > credentials = tokenUtils.decrypt(token);
-
-
-   Email = credentials.get(Email);
-   UserPassword = credentials.get(UserPassword);
-
-   tokenUtils.check(new Account(Email, UserPassword), user);
-
-   response = dao.SelectBatches();
-
-
-
-
-
-  } catch (NotAuthorizedException e) {
-
-  }
-
-  return response;
-
-
-
- }
-
-
-
-
+ 
 
  /**
   *
@@ -112,7 +69,7 @@ public class BatchResource {
  @Path("/{token}/upload/{bestandsNaam}")
  @Consumes(MediaType.APPLICATION_JSON)
  @Produces(MediaType.TEXT_PLAIN)
- public Response uploadDump(Dump[] excel, @PathParam("token") String token, @PathParam("bestandsNaam") String bestandsNaam) {
+ public Response uploadDump(List<Dump> excel, @PathParam("token") String token, @PathParam("bestandsNaam") String bestandsNaam) {
   Response response = defaultRespone; //return this response unless changed
 
 
@@ -147,7 +104,7 @@ public class BatchResource {
 	      dao.InsertBatch(bestandsNaam);
 	    
 
-	     } catch (Error e) {
+	     } catch (SQLException e) {
 
 	    	 Response fillNameNotRightResponse = Response.serverError()
 	    	  .entity(failedResponeMessage)
@@ -171,19 +128,22 @@ public class BatchResource {
         excelRow.getGenoemde_social_media()
 
        );
-      } catch (Error e) {
+       
+      } catch (SQLException e) {
 
+    	  
       }
 
-      try {
+      
+     try {
 
        dao.InsertContactPersoon(
 
         excelRow.getGenoemde_social_media(),
-        excelRow.getMessage(),
+     
         excelRow.getUser());
 
-      } catch (Error e) {
+      } catch (SQLException e) {
 
       }
 
@@ -211,7 +171,7 @@ public class BatchResource {
 
       );
 
-     } catch (Error e) {
+    } catch (SQLException e) {
 //this row failed to insert
      }
     }
