@@ -31,22 +31,29 @@ public class APIstarter {
         }
     }
 
-    public void SendMessageKik(String message, ArrayList<String> users) throws IOException  {
+    public void SendMessageKik(String message, ArrayList<String> users)  {
 
         //writes users to file that will be read by API
-        FileWriter fw=new FileWriter("src\\main\\java\\nl\\Ipsen5Server\\Service\\users.txt");
-        fw.write(users.toString());
-        fw.close();
+        FileWriter fw= null;
+        try {
+            fw = new FileWriter("src\\main\\java\\nl\\Ipsen5Server\\Service\\users.txt");
 
-        //writes message to file that will be read by API
-        FileWriter fw1=new FileWriter("src\\main\\java\\nl\\Ipsen5Server\\Service\\message.txt");
-        fw1.write(message);
-        fw1.close();
+            fw.write(users.toString());
+            fw.close();
 
-        //creates client side and connects to API, this will trigger API to send the message to all users in users.txt file
-        Socket s;
-        s = new Socket(InetAddress.getLocalHost().getHostName() ,1234);
-        PrintWriter pr = new PrintWriter(s.getOutputStream());
+            //writes message to file that will be read by API
+            FileWriter fw1 = new FileWriter("src\\main\\java\\nl\\Ipsen5Server\\Service\\message.txt");
+            fw1.write(message);
+            fw1.close();
+
+            //creates client side and connects to API, this will trigger API to send the message to all users in users.txt file
+            Socket s;
+            s = new Socket(InetAddress.getLocalHost().getHostName(), 1234);
+            PrintWriter pr = new PrintWriter(s.getOutputStream());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void logOutput(InputStream inputStream, String prefix) {
