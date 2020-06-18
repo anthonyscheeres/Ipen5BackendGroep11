@@ -28,6 +28,7 @@ public class MessageResource {
         }
 
         return Response.ok(allTemplates, MediaType.APPLICATION_JSON).build();
+        
     }
 
 
@@ -35,9 +36,11 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/id/{MessageID}")
     public Response findTemplateByMessageID(
-            @PathParam("MessageID") String MessageID) {
-
-        System.out.println("HET ID: " + MessageID);
+    		
+            @PathParam("MessageID") String MessageID
+            
+            ) {
+    	
         Message message = dao.getTemplateByMessageID(MessageID);
 
         if (message == null) {
