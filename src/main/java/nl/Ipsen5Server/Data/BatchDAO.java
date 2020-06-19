@@ -2,6 +2,7 @@ package nl.Ipsen5Server.Data;
 
 import java.sql.SQLException;
 
+import org.jdbi.v3.sqlobject.SqlObject;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -156,7 +157,7 @@ public interface BatchDAO {
            + " left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
-	Dump[] SelectBatches() ;
+    SqlObject SelectBatches() ;
     
     
 
@@ -170,13 +171,13 @@ public interface BatchDAO {
           + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
    		
        )
-	Dump[] SelectSpecificBatches(
+   SqlObject SelectSpecificBatches(
 			
 			 @Bind("Batch") String batch
 			) ;
 
    @SqlQuery("SELECT * FROM Batch;")
-Dump[] SelectBatchNames();
+   SqlObject SelectBatchNames();
 
 
 }

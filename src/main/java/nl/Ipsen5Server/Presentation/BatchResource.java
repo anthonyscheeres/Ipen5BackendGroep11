@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jdbi.v3.sqlobject.SqlObject;
 
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
@@ -67,8 +68,8 @@ public class BatchResource {
  @GET
  @Path("/{token}/show")
  @Produces(MediaType.APPLICATION_JSON)
- public Dump[] showBatches(@PathParam("token") String token) {
-  Dump[] response = null;
+ public SqlObject showBatches(@PathParam("token") String token) {
+  SqlObject response = null;
 
   try {
 
@@ -107,7 +108,7 @@ public class BatchResource {
 @GET
 @Path("/Batch")
 @Produces(MediaType.APPLICATION_JSON)
-public Dump[] selectBatches() {
+public SqlObject selectBatches() {
 	return dao.SelectBatchNames();
 	
 }
@@ -120,8 +121,8 @@ public Dump[] selectBatches() {
  @GET
  @Path("/{token}/showBatch/{id}/")
  @Produces(MediaType.APPLICATION_JSON)
- public Dump[] selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
-  Dump[] response = null;
+ public SqlObject selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  SqlObject response = null;
 
   try {
 
