@@ -78,7 +78,7 @@ public interface BatchDAO {
 
         @Bind("User") String user
 
-    	    ) throws  SQLException;
+    	    ) throws UnableToExecuteStatementException;
 
     
 
@@ -104,7 +104,7 @@ public interface BatchDAO {
 
             @Bind("Batch") String batch
 
-    	    ) throws  SQLException;
+    	    ) throws UnableToExecuteStatementException;
     
     
     
@@ -130,7 +130,7 @@ public interface BatchDAO {
         @Bind("Platform") String platform,
         @Bind("User") String contactPersoon
 
-    	    ) throws  SQLException;
+    	    );
 
 
     /**

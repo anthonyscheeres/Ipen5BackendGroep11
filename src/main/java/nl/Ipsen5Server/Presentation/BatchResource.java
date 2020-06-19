@@ -120,8 +120,7 @@ public class BatchResource {
    new Thread(() -> {
 
     for (Dump excelRow: excel) {
-     try {
-
+    
 
       try {
     	  
@@ -148,7 +147,9 @@ public class BatchResource {
       } catch (UnableToExecuteStatementException e) {
 
       }
-
+     
+     
+     try {
       dao.InsertContact(
 
        excelRow.getGenoemde_social_media(),
@@ -156,15 +157,13 @@ public class BatchResource {
 
       );
 
-      dao.UpdateInfo(
+     } catch (UnableToExecuteStatementException e) {
 
-       excelRow.getPartial_IP(),
-       excelRow.getMessage(),
-       excelRow.getGenoemde_social_media(),
-       excelRow.getUser()
-
-      );
-
+     }
+      
+      
+ 
+try {
       dao.InsertContactBatch(
 
        excelRow.getUser(),
@@ -172,11 +171,26 @@ public class BatchResource {
        bestandsNaam
 
       );
+      
+      
+      
+      
+     } catch (UnableToExecuteStatementException e) {
 
-    } catch (SQLException e) {
-//this row failed to insert
      }
+      
+dao.UpdateInfo(
+
+	       excelRow.getPartial_IP(),
+	       excelRow.getMessage(),
+	       excelRow.getGenoemde_social_media(),
+	       excelRow.getUser()
+
+	      );
+
+    
     }
+   
 
    }).start();
 
