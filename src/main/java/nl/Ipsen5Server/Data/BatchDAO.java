@@ -1,23 +1,17 @@
 package nl.Ipsen5Server.Data;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
-import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
-import org.json.JSONObject;
+
 import org.jdbi.v3.core.mapper.*; 
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
-
-import nl.Ipsen5Server.Domain.Dump;
 
 
 @RegisterRowMapper(MapMapper.class)
@@ -119,7 +113,7 @@ public interface BatchDAO {
      *
      */
 
-    @Transaction
+
     
     @SqlUpdate(
 
@@ -165,7 +159,7 @@ public interface BatchDAO {
 
     	    ) throws UnableToExecuteStatementException;
 
-
+    @SqlQuery(
            "SELECT * FROM BatchContactPersoon"
            + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
            + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
