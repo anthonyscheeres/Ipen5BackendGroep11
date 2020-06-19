@@ -2,6 +2,7 @@ package nl.Ipsen5Server.Data;
 
 import java.sql.SQLException;
 
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -23,31 +24,31 @@ public interface BatchDAO {
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
 
         "INSERT INTO Platform(PlatformName) VALUES(:Platform); "
 
     )
-
+    @Transaction
     void InsertPlatform(
 
         @Bind("Platform") String genoemde_social_media
 
-    	    ) throws  SQLException;
+    	    ) throws UnableToExecuteStatementException;
 
     /**
      *
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
     		
         "INSERT INTO ContactPersoon(UserID, CustomMessage, ContactName) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg', :User); "
 
     )
-
+    @Transaction
     void InsertContactPersoon (
 
 
@@ -56,21 +57,21 @@ public interface BatchDAO {
         
         @Bind("User") String user
 
-    ) throws  SQLException;
+    ) throws  UnableToExecuteStatementException;
 
     /**
      *
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
 
 
         "INSERT INTO Contact(Username, Platform, UserID) VALUES (:User, :Platform, CONCAT(MD5(:User), MD5(:Platform))); "
 
     )
-
+    @Transaction
     void InsertContact(
 
         @Bind("Platform") String genoemde_social_media,
@@ -86,14 +87,14 @@ public interface BatchDAO {
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
 
 
         "INSERT INTO BatchContactPersoon(ContactPersoon, Batch) VALUES (CONCAT(MD5(:User), MD5(:Platform)), :Batch);"
 
     )
-
+    @Transaction
     void InsertContactBatch(
 
 
@@ -112,14 +113,14 @@ public interface BatchDAO {
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
 
 
         "UPDATE ContactPersoon SET Info = :Info, OriginalPost = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
 
     )
-
+    @Transaction
     void UpdateInfo(
 
     	@Bind("CustomMessage") String message,
@@ -137,20 +138,20 @@ public interface BatchDAO {
      * @author Anthony Scheeres
      *
      */
-    @Transaction
+
     @SqlUpdate(
 
 
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
     ) 
-
+    @Transaction
     void InsertBatch(
 
 
             @Bind("Batch") String batch
 
-    	    ) throws  SQLException;
+    	    ) throws UnableToExecuteStatementException;
 
 
 }

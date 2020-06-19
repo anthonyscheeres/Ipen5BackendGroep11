@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.json.JSONObject;
 
 import nl.Ipsen5Server.Data.BatchDAO;
@@ -104,7 +105,7 @@ public class BatchResource {
 	      dao.InsertBatch(bestandsNaam);
 	    
 
-	     } catch (SQLException e) {
+	     } catch (UnableToExecuteStatementException e) {
 
 	    	 Response fillNameNotRightResponse = Response.serverError()
 	    	  .entity(failedResponeMessage)
@@ -123,13 +124,14 @@ public class BatchResource {
 
 
       try {
+    	  
        dao.InsertPlatform(
 
         excelRow.getGenoemde_social_media()
 
        );
        
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
     	  
       }
@@ -143,7 +145,7 @@ public class BatchResource {
      
         excelRow.getUser());
 
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
       }
 
