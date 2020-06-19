@@ -110,8 +110,8 @@ public interface BatchDAO {
      *
      */
     @Transaction
+    
     @SqlUpdate(
-
 
         "UPDATE ContactPersoon SET Info = :Info, OriginalPost = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
 
@@ -129,6 +129,12 @@ public interface BatchDAO {
     	    ) throws  SQLException;
 
 
+    
+    
+    
+    
+    
+    
     /**
      *
      * @author Anthony Scheeres
@@ -137,7 +143,7 @@ public interface BatchDAO {
     @Transaction
     @SqlUpdate(
 
-
+    	
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
     ) 
@@ -160,8 +166,7 @@ public interface BatchDAO {
         )
     List<Map<String, Object>> SelectBatches() ;
     
-    
-
+   
 
    @SqlQuery(
 
