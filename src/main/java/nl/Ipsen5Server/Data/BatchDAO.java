@@ -1,6 +1,7 @@
 package nl.Ipsen5Server.Data;
 
-import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
@@ -8,14 +9,12 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
-import org.json.JSONObject;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
-
-import nl.Ipsen5Server.Domain.Dump;
+import org.jdbi.v3.core.mapper.*; 
 
 
+
+@RegisterRowMapper(MapMapper.class)
 public interface BatchDAO {
 
 
@@ -114,8 +113,9 @@ public interface BatchDAO {
      *
      */
 
-    @SqlUpdate(
 
+    
+    @SqlUpdate(
 
         "UPDATE ContactPersoon SET Info = :Info, OriginalPost = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
 
@@ -133,6 +133,12 @@ public interface BatchDAO {
     	    );
 
 
+    
+    
+    
+    
+    
+    
     /**
      *
      * @author Anthony Scheeres
@@ -141,7 +147,7 @@ public interface BatchDAO {
 
     @SqlUpdate(
 
-
+    	
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
     ) 
@@ -152,6 +158,35 @@ public interface BatchDAO {
             @Bind("Batch") String batch
 
     	    ) throws UnableToExecuteStatementException;
+
+    @SqlQuery(
+           "SELECT * FROM BatchContactPersoon"
+           + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
+           + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
+           + " left join Contact on Contact.Username = ContactPersoon.UserID"
+           + " left join Platform on Contact.Platform = Platform.PlatformName; "
+    		
+        )
+    List<Map<String, Object>> SelectBatches() ;
+    
+   
+
+   @SqlQuery(
+
+          "SELECT * FROM BatchContactPersoon"
+          + " left join Batch on BatchContactPersoon.Batch = Batch.BatchID"
+          + " left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID"
+          + " left join Contact on Contact.Username = ContactPersoon.UserID"
+          + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
+   		
+       )
+   List<Map<String, Object>> SelectSpecificBatches(
+			
+			 @Bind("Batch") String batch
+			) ;
+
+   @SqlQuery("SELECT * FROM Batch;")
+   List<Map<String, Object>> SelectBatchNames();
 
 
 }
