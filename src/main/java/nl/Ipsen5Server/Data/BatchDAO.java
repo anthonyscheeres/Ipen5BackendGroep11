@@ -1,16 +1,18 @@
 package nl.Ipsen5Server.Data;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import org.jdbi.v3.sqlobject.SqlObject;
+import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
+import org.jdbi.v3.core.mapper.*; 
 
-import nl.Ipsen5Server.Domain.Dump;
-
-
+@RegisterRowMapper(MapMapper.class)
 public interface BatchDAO {
 
 
@@ -157,7 +159,7 @@ public interface BatchDAO {
            + " left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
-    SqlObject SelectBatches() ;
+    List<Map<String, Object>> SelectBatches() ;
     
     
 
@@ -171,13 +173,13 @@ public interface BatchDAO {
           + " left join Platform on Contact.Platform = Platform.PlatformName WHERE Batch = :Batch; "
    		
        )
-   SqlObject SelectSpecificBatches(
+   List<Map<String, Object>> SelectSpecificBatches(
 			
 			 @Bind("Batch") String batch
 			) ;
 
    @SqlQuery("SELECT * FROM Batch;")
-   SqlObject SelectBatchNames();
+   List<Map<String, Object>> SelectBatchNames();
 
 
 }

@@ -68,8 +68,8 @@ public class BatchResource {
  @GET
  @Path("/{token}/show")
  @Produces(MediaType.APPLICATION_JSON)
- public SqlObject showBatches(@PathParam("token") String token) {
-  SqlObject response = null;
+ public List<Map<String, Object>> showBatches(@PathParam("token") String token) {
+  List<Map<String, Object>> response = null;
 
   try {
 
@@ -106,9 +106,8 @@ public class BatchResource {
  *
  */
 @GET
-@Path("/Batch")
 @Produces(MediaType.APPLICATION_JSON)
-public SqlObject selectBatches() {
+public List<Map<String, Object>> selectBatches() {
 	return dao.SelectBatchNames();
 	
 }
@@ -121,8 +120,8 @@ public SqlObject selectBatches() {
  @GET
  @Path("/{token}/showBatch/{id}/")
  @Produces(MediaType.APPLICATION_JSON)
- public SqlObject selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
-  SqlObject response = null;
+ public List<Map<String, Object>> selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  List<Map<String, Object>> response = null;
 
   try {
 
