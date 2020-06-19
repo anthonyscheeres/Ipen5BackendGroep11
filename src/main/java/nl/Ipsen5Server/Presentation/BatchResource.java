@@ -18,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jdbi.v3.sqlobject.SqlObject;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
+import org.json.JSONObject;
 
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
@@ -198,7 +200,7 @@ public List<Map<String, Object>> selectBatches() {
 	      dao.InsertBatch(bestandsNaam);
 	    
 
-	     } catch (SQLException e) {
+	     } catch (UnableToExecuteStatementException e) {
 
 	    	 Response fillNameNotRightResponse = Response.serverError()
 	    	  .entity(failedResponeMessage)
@@ -213,17 +215,17 @@ public List<Map<String, Object>> selectBatches() {
    new Thread(() -> {
 
     for (Dump excelRow: excel) {
-     try {
-
+    
 
       try {
+    	  
        dao.InsertPlatform(
 
         excelRow.getGenoemde_social_media()
 
        );
        
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
     	  
       }
@@ -237,10 +239,12 @@ public List<Map<String, Object>> selectBatches() {
      
         excelRow.getUser());
 
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
       }
-
+     
+     
+     try {
       dao.InsertContact(
 
        excelRow.getGenoemde_social_media(),
@@ -248,15 +252,13 @@ public List<Map<String, Object>> selectBatches() {
 
       );
 
-      dao.UpdateInfo(
+     } catch (UnableToExecuteStatementException e) {
 
-       excelRow.getPartial_IP(),
-       excelRow.getMessage(),
-       excelRow.getGenoemde_social_media(),
-       excelRow.getUser()
-
-      );
-
+     }
+      
+      
+ 
+try {
       dao.InsertContactBatch(
 
        excelRow.getUser(),
@@ -264,11 +266,26 @@ public List<Map<String, Object>> selectBatches() {
        bestandsNaam
 
       );
+      
+      
+      
+      
+     } catch (UnableToExecuteStatementException e) {
 
-    } catch (SQLException e) {
-//this row failed to insert
      }
+      
+dao.UpdateInfo(
+
+	       excelRow.getPartial_IP(),
+	       excelRow.getMessage(),
+	       excelRow.getGenoemde_social_media(),
+	       excelRow.getUser()
+
+	      );
+
+    
     }
+   
 
    }).start();
 
