@@ -169,21 +169,6 @@ public interface BatchDAO {
         )
     List<Map<String, Object>> SelectBatches() ;
     
-   
-
-   @SqlQuery(
-
-          "SELECT Platform, Username FROM BatchContactPersoon "
-          + "right join Batch on BatchContactPersoon.Batch = Batch.BatchID "
-          + "right join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
-          + "right join Contact on Contact.Username = ContactPersoon.UserID right join Platform on Contact.Platform = Platform.PlatformName "
-          + "WHERE Batch = :Batch; "
-   		
-       )
-   List<Map<String, Object>> SelectSpecificBatches(
-			
-			 @Bind("Batch") String batch
-			) ;
 
    @SqlQuery("SELECT * FROM Batch;")
    List<Map<String, Object>> SelectBatchNames();
