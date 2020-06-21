@@ -169,7 +169,6 @@ public interface BatchDAO {
         )
     List<Map<String, Object>> SelectBatches() ;
     
-   
 
    @SqlQuery(
 
