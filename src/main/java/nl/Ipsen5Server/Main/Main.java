@@ -18,6 +18,7 @@ import nl.Ipsen5Server.Interfaces.Authorisation;
 
 import nl.Ipsen5Server.Presentation.UserResource;
 import nl.Ipsen5Server.Service.APIstarter;
+import nl.Ipsen5Server.Presentation.PlatformResource;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 import nl.Ipsen5Server.Service.Token;
 
@@ -75,8 +76,9 @@ public class Main extends Application<Settings>{
 
 
         Authorisation author =  new Token();// forces you to use the interfaced method
-
-
+        
+        APIstarter a = new APIstarter();
+        
         
         //test code here =>
 
@@ -91,6 +93,7 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         environment.jersey().register(new ColleagueResource(colleagueDAO));
+        environment.jersey().register(new PlatformResource(a));
 
  
         

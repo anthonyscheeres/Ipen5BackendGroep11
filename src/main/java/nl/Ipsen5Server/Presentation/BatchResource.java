@@ -1,8 +1,7 @@
 package nl.Ipsen5Server.Presentation;
 
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +16,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jdbi.v3.sqlobject.SqlObject;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
-import org.json.JSONObject;
+
 
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
