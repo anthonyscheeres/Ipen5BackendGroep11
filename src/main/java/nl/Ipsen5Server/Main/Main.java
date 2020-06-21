@@ -9,13 +9,10 @@ import javax.servlet.FilterRegistration;
 
 import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.server.DefaultServerFactory;
-import nl.Ipsen5Server.Data.BatchDAO;
-import nl.Ipsen5Server.Data.MessageDAO;
-import nl.Ipsen5Server.Data.UserDAO;
+import nl.Ipsen5Server.Data.*;
 
-import nl.Ipsen5Server.Presentation.BatchResource;
-import nl.Ipsen5Server.Data.ContactPersonDAO;
-import nl.Ipsen5Server.Presentation.MessageResource;
+import nl.Ipsen5Server.Domain.Colleague;
+import nl.Ipsen5Server.Presentation.*;
 
 import nl.Ipsen5Server.Interfaces.Authorisation;
 
@@ -23,7 +20,6 @@ import nl.Ipsen5Server.Presentation.UserResource;
 import nl.Ipsen5Server.Service.APIstarter;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 import nl.Ipsen5Server.Service.Token;
-import nl.Ipsen5Server.Presentation.ContactPersonResource;
 
 
 import io.dropwizard.Application;
@@ -75,6 +71,7 @@ public class Main extends Application<Settings>{
         final MessageDAO messageDAO = jdbi.onDemand(MessageDAO.class);
         final BatchDAO batchDAO = jdbi.onDemand(BatchDAO.class);
         final ContactPersonDAO contactPersonDAO = jdbi.onDemand(ContactPersonDAO.class);
+        final ColleagueDAO colleagueDAO = jdbi.onDemand(ColleagueDAO.class);
 
 
         Authorisation author =  new Token();// forces you to use the interfaced method
@@ -93,6 +90,10 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new MessageResource(messageDAO));
         environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
+        environment.jersey().register(new ColleagueResource(colleagueDAO));
+
+ 
+        
 
 
 
