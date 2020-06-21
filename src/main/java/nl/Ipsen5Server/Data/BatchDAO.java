@@ -169,9 +169,6 @@ public interface BatchDAO {
         )
     List<Map<String, Object>> SelectBatches() ;
     
-<<<<<<< refs/remotes/origin/master
-=======
-   
 
    @SqlQuery(
 
@@ -186,7 +183,6 @@ public interface BatchDAO {
 			
 			 @Bind("Batch") String batch
 			) ;
->>>>>>> resolved unable to do full join with batches bug
 
    @SqlQuery("SELECT * FROM Batch;")
    List<Map<String, Object>> SelectBatchNames();
