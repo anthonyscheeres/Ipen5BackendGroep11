@@ -4,9 +4,9 @@ import requests
 import time
 from threading import Thread
 
-from kik_unofficial.datatypes.exceptions import KikUploadError
-from kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
-from kik_unofficial.device_configuration import kik_version_info
+from ...kik_unofficial.datatypes.exceptions import KikUploadError
+from ...kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
+from ...kik_unofficial.device_configuration import kik_version_info
 
 
 log = logging.getLogger('kik_unofficial')

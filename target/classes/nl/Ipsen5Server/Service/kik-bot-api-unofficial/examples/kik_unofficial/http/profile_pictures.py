@@ -3,10 +3,10 @@ import os
 from threading import Thread
 
 import requests
-from kik_unofficial.device_configuration import kik_version_info
-from kik_unofficial.datatypes.exceptions import KikApiException, KikUploadError
-from kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
-from kik_unofficial.utilities.parsing_utilities import get_file_bytes
+from ...kik_unofficial.device_configuration import kik_version_info
+from ...kik_unofficial.datatypes.exceptions import KikApiException, KikUploadError
+from ...kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
+from ...kik_unofficial.utilities.parsing_utilities import get_file_bytes
 
 log = logging.getLogger('kik_unofficial')
 

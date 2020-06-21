@@ -6,7 +6,6 @@ from threading import Thread, Event
 from typing import Union, List, Tuple
 from asyncio import Transport, Protocol
 from bs4 import BeautifulSoup
-
 from ..kik_unofficial import callbacks as callbacks
 from ..kik_unofficial.datatypes import exceptions as exceptions
 from ..kik_unofficial.datatypes.xmpp import chatting as chatting
