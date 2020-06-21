@@ -28,6 +28,10 @@ public class ColleagueResource {
     public Response getAllColleagues() {
         ArrayList<Colleague> allColleagues = dao.getAll();
 
+        
+        //TODO: rewrite this method so it authorizes the user by checking the token before serving the data
+        
+        
         if (allColleagues == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -44,6 +48,9 @@ public class ColleagueResource {
         System.out.println("De mail: " + Email);
         Colleague colleague = dao.getTemplateByEmail(Email);
 
+        
+        
+        
         if (colleague == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
