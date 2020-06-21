@@ -59,6 +59,44 @@ public class BatchResource {
 
 
 
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/showBatch/{id}/")
+ @Produces(MediaType.APPLICATION_JSON)
+ public List<Map<String, Object>> selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  List<Map<String, Object>> response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectSpecificBatches(id);
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
+
+
+
+ }
+
+
 
 
 
