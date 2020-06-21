@@ -163,12 +163,30 @@ public interface BatchDAO {
            "SELECT Platform, Username FROM BatchContactPersoon "
            + "right join Batch on BatchContactPersoon.Batch = Batch.BatchID "
            + "right join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
-           + "right join Contact on Contact.Username = ContactPersoon.UserID "
+           + "right join Contact on Contact.UserID = ContactPersoon.UserID "
            + "right join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
     List<Map<String, Object>> SelectBatches() ;
     
+<<<<<<< refs/remotes/origin/master
+=======
+   
+
+   @SqlQuery(
+
+          "SELECT Platform, Username FROM BatchContactPersoon "
+          + "right join Batch on BatchContactPersoon.Batch = Batch.BatchID "
+          + "right join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
+          + "right join Contact on Contact.UserID = ContactPersoon.UserID right join Platform on Contact.Platform = Platform.PlatformName "
+          + "WHERE Batch = :Batch; "
+   		
+       )
+   List<Map<String, Object>> SelectSpecificBatches(
+			
+			 @Bind("Batch") String batch
+			) ;
+>>>>>>> resolved unable to do full join with batches bug
 
    @SqlQuery("SELECT * FROM Batch;")
    List<Map<String, Object>> SelectBatchNames();
