@@ -1,8 +1,11 @@
 package nl.Ipsen5Server.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import nl.Ipsen5Server.Domain.Batch;
+import nl.Ipsen5Server.Service.BatchMapper;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -10,12 +13,17 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.jdbi.v3.sqlobject.transaction.Transaction;
 
-import org.jdbi.v3.core.mapper.*; 
+import org.jdbi.v3.core.mapper.*;
 
 
 
-@RegisterRowMapper(MapMapper.class)
+@RegisterRowMapper(BatchMapper.class)
 public interface BatchDAO {
+
+
+  @SqlQuery("SELECT * FROM Batch")
+  ArrayList<Batch> getAllBatches();
+
 
 
     /**
@@ -43,7 +51,7 @@ public interface BatchDAO {
      */
 
     @SqlUpdate(
-    		
+
         "INSERT INTO ContactPersoon(UserID, CustomMessage, ContactName) VALUES (CONCAT(MD5(:User), MD5(:Platform)), 'Leeg', :User); "
 
     )
@@ -53,7 +61,7 @@ public interface BatchDAO {
 
         @Bind("Platform") String genoemde_social_media,
 
-        
+
         @Bind("User") String user
 
     ) throws  UnableToExecuteStatementException;
@@ -79,7 +87,7 @@ public interface BatchDAO {
 
     	    ) throws UnableToExecuteStatementException;
 
-    
+
 
     /**
      *
@@ -98,15 +106,15 @@ public interface BatchDAO {
 
 
             @Bind("User") String contactPersoon,
-            
+
             @Bind("Platform") String platform,
 
             @Bind("Batch") String batch
 
     	    ) throws UnableToExecuteStatementException;
-    
-    
-    
+
+
+
     /**
      *
      * @author Anthony Scheeres
@@ -114,7 +122,7 @@ public interface BatchDAO {
      */
 
 
-    
+
     @SqlUpdate(
 
         "UPDATE ContactPersoon SET Info = :Info, OriginalPost = :CustomMessage WHERE UserID = CONCAT(MD5(:User), MD5(:Platform)); "
@@ -125,20 +133,20 @@ public interface BatchDAO {
 
     	@Bind("CustomMessage") String message,
         @Bind("Info") String partial_IP,
-     
-        
+
+
         @Bind("Platform") String platform,
         @Bind("User") String contactPersoon
 
     	    );
 
 
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     /**
      *
      * @author Anthony Scheeres
@@ -147,10 +155,10 @@ public interface BatchDAO {
 
     @SqlUpdate(
 
-    	
+
         "INSERT INTO Batch(BatchID, BatchName) VALUES (:Batch, :Batch); "
 
-    ) 
+    )
     @Transaction
     void InsertBatch(
 
@@ -165,10 +173,10 @@ public interface BatchDAO {
            + "left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
            + "left join Contact on Contact.UserID = ContactPersoon.UserID "
            + "left join Platform on Contact.Platform = Platform.PlatformName; "
-    		
+
         )
     List<Map<String, Object>> SelectBatches() ;
-    
+
 
    @SqlQuery(
 
@@ -178,10 +186,10 @@ public interface BatchDAO {
           + "left join Contact on Contact.UserID = ContactPersoon.UserID "
           + "left join Platform on Contact.Platform = Platform.PlatformName "
           + "WHERE Batch = :Batch; "
-   		
+
        )
    List<Map<String, Object>> SelectSpecificBatches(
-			
+
 			 @Bind("Batch") String batch
 			) ;
 
