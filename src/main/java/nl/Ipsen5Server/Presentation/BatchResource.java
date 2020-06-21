@@ -1,7 +1,7 @@
 package nl.Ipsen5Server.Presentation;
 
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ import nl.Ipsen5Server.Domain.Batch;
 import nl.Ipsen5Server.Domain.Message;
 import org.jdbi.v3.sqlobject.SqlObject;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
-import org.json.JSONObject;
+
 
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
@@ -57,7 +57,7 @@ public class BatchResource {
  @Path("/all")
  @Produces(MediaType.APPLICATION_JSON)
  public Response getAllBatches() {
-  ArrayList<Batch> allBatches = dao.getAllBatches();
+  List<Map<String, Object>> allBatches = dao.getAllBatches();
 
   if (allBatches == null) {
    throw new WebApplicationException(Response.Status.NOT_FOUND);

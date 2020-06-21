@@ -32,5 +32,4 @@ public interface MessageDAO {
             @Bind("Message") String Message,
             @Bind("Info") String Info
     );
-
 }
