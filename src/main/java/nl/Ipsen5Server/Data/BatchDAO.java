@@ -161,10 +161,10 @@ public interface BatchDAO {
 
     @SqlQuery(
            "SELECT Platform, Username FROM BatchContactPersoon "
-           + "right join Batch on BatchContactPersoon.Batch = Batch.BatchID "
-           + "right join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
-           + "right join Contact on Contact.UserID = ContactPersoon.UserID "
-           + "right join Platform on Contact.Platform = Platform.PlatformName; "
+           + "left join Batch on BatchContactPersoon.Batch = Batch.BatchID "
+           + "left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
+           + "left join Contact on Contact.UserID = ContactPersoon.UserID "
+           + "left join Platform on Contact.Platform = Platform.PlatformName; "
     		
         )
     List<Map<String, Object>> SelectBatches() ;
@@ -173,9 +173,9 @@ public interface BatchDAO {
    @SqlQuery(
 
           "SELECT Platform, Username FROM BatchContactPersoon "
-          + "right join Batch on BatchContactPersoon.Batch = Batch.BatchID "
-          + "right join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
-          + "right join Contact on Contact.UserID = ContactPersoon.UserID right join Platform on Contact.Platform = Platform.PlatformName "
+          + "left join Batch on BatchContactPersoon.Batch = Batch.BatchID "
+          + "left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
+          + "left join Contact on Contact.UserID = ContactPersoon.UserID right join Platform on Contact.Platform = Platform.PlatformName "
           + "WHERE Batch = :Batch; "
    		
        )
