@@ -17,6 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.jdbi.v3.sqlobject.SqlObject;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.json.JSONObject;
 
 import nl.Ipsen5Server.Data.BatchDAO;
@@ -57,6 +59,98 @@ public class BatchResource {
 
 
 
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/showBatch/{id}/")
+ @Produces(MediaType.APPLICATION_JSON)
+ public List<Map<String, Object>> selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  List<Map<String, Object>> response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectSpecificBatches(id);
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
+
+
+
+ }
+
+
+
+
+
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/show")
+ @Produces(MediaType.APPLICATION_JSON)
+ public List<Map<String, Object>> showBatches(@PathParam("token") String token) {
+  List<Map<String, Object>> response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectBatches();
+
+
+
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
+
+
+
+ }
+
+ /**
+ *
+ * @author Anthony Scheeres
+ *
+ */
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+public List<Map<String, Object>> selectBatches() {
+	return dao.SelectBatchNames();
+	
+}
 
  
 
@@ -104,7 +198,7 @@ public class BatchResource {
 	      dao.InsertBatch(bestandsNaam);
 	    
 
-	     } catch (SQLException e) {
+	     } catch (UnableToExecuteStatementException e) {
 
 	    	 Response fillNameNotRightResponse = Response.serverError()
 	    	  .entity(failedResponeMessage)
@@ -119,17 +213,17 @@ public class BatchResource {
    new Thread(() -> {
 
     for (Dump excelRow: excel) {
-     try {
-
+    
 
       try {
+    	  
        dao.InsertPlatform(
 
         excelRow.getGenoemde_social_media()
 
        );
        
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
     	  
       }
@@ -143,10 +237,12 @@ public class BatchResource {
      
         excelRow.getUser());
 
-      } catch (SQLException e) {
+      } catch (UnableToExecuteStatementException e) {
 
       }
-
+     
+     
+     try {
       dao.InsertContact(
 
        excelRow.getGenoemde_social_media(),
@@ -154,15 +250,13 @@ public class BatchResource {
 
       );
 
-      dao.UpdateInfo(
+     } catch (UnableToExecuteStatementException e) {
 
-       excelRow.getPartial_IP(),
-       excelRow.getMessage(),
-       excelRow.getGenoemde_social_media(),
-       excelRow.getUser()
-
-      );
-
+     }
+      
+      
+ 
+try {
       dao.InsertContactBatch(
 
        excelRow.getUser(),
@@ -170,11 +264,26 @@ public class BatchResource {
        bestandsNaam
 
       );
+      
+      
+      
+      
+     } catch (UnableToExecuteStatementException e) {
 
-    } catch (SQLException e) {
-//this row failed to insert
      }
+      
+dao.UpdateInfo(
+
+	       excelRow.getPartial_IP(),
+	       excelRow.getMessage(),
+	       excelRow.getGenoemde_social_media(),
+	       excelRow.getUser()
+
+	      );
+
+    
     }
+   
 
    }).start();
 
