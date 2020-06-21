@@ -57,7 +57,7 @@ public class BatchResource {
  @Path("/all")
  @Produces(MediaType.APPLICATION_JSON)
  public Response getAllBatches() {
-  ArrayList<Batch> allBatches = dao.getAllBatches();
+  List<Map<String, Object>> allBatches = dao.getAllBatches();
 
   if (allBatches == null) {
    throw new WebApplicationException(Response.Status.NOT_FOUND);

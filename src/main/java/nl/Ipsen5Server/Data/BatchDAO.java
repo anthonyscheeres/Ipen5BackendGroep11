@@ -1,11 +1,9 @@
 package nl.Ipsen5Server.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import nl.Ipsen5Server.Domain.Batch;
-import nl.Ipsen5Server.Service.BatchMapper;
+
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
