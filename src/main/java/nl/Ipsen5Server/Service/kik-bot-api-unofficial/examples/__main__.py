@@ -3,6 +3,7 @@ A Kik bot that just logs every event that it gets (new message, message read, et
 and echos back whatever chat messages it receives.
 """
 import os
+import socket
 from .kik_unofficial.datatypes.xmpp import chatting as chatting
 from .kik_unofficial.client import KikClient
 from .kik_unofficial.callbacks import KikClientCallback
@@ -16,7 +17,15 @@ password = 'HeleGoeieWachtwoord'
 cur_path = os.path.dirname(os.path.abspath(__file__))
 
 def main():
-    bot = EchoBot()
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.bind((socket.gethostname(), 1234))
+    s.listen(9)
+    while True:
+        print("listening")
+        c,addr = s.accept()
+        print("connecction with: ", addr)
+        bot = EchoBot()
+
 
 def getUsers():
     print("current path: ", cur_path)
@@ -57,9 +66,8 @@ class EchoBot(KikClientCallback):
     def on_authenticated(self):
         print("Now I'm ready to send a message")
         for i in getUsers():
-            self.client.send_chat_message(self.client.get_jid(i.replace(" ", "")), getMessage())
+            self.client.send_chat_message(self.client.get_jid(i.replace(" ", "").strip()), getMessage())
         self.client.disconnect()
-
 
     def on_login_ended(self, response: LoginResponse):
         print("Full name: {} {}".format(response.first_name, response.last_name))

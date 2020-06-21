@@ -11,7 +11,7 @@ from ..kik_unofficial.datatypes.xmpp.xiphias import UsersResponse, UsersByAliasR
 from ..kik_unofficial.datatypes.xmpp.chatting import IncomingMessageDeliveredEvent, IncomingMessageReadEvent, IncomingChatMessage, \
     IncomingGroupChatMessage, IncomingFriendAttribution, IncomingGroupStatus, IncomingIsTypingEvent, IncomingGroupIsTypingEvent, \
     IncomingStatusResponse, IncomingGroupSticker, IncomingGroupSysmsg, IncomingImageMessage, IncomingGroupReceiptsEvent, IncomingGifMessage, \
-    IncomingVideoMessage, IncomingCardMessage..
+    IncomingVideoMessage, IncomingCardMessage
 
 log = logging.getLogger('kik_unofficial')
 

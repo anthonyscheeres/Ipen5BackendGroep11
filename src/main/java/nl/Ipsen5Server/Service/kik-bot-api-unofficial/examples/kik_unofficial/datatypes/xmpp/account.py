@@ -1,6 +1,6 @@
-from kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
+from ....kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
 
-from kik_unofficial.datatypes.xmpp.base_elements import XMPPElement
+from ....kik_unofficial.datatypes.xmpp.base_elements import XMPPElement
 
 
 class ChangeNameRequest(XMPPElement):

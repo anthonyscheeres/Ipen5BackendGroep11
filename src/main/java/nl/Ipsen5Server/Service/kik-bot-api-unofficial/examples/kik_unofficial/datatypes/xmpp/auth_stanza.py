@@ -7,8 +7,8 @@ import pyDes
 import rsa
 import time
 
-from kik_unofficial.device_configuration import device_id
-from kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
+from ....kik_unofficial.device_configuration import device_id
+from ....kik_unofficial.utilities.cryptographic_utilities import CryptographicUtils
 
 
 log = logging.getLogger(__name__)
