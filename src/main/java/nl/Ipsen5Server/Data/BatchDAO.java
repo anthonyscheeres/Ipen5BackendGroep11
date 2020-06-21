@@ -17,12 +17,12 @@ import org.jdbi.v3.core.mapper.*;
 
 
 
-@RegisterRowMapper(BatchMapper.class)
+@RegisterRowMapper(MapMapper.class)
 public interface BatchDAO {
 
 
   @SqlQuery("SELECT * FROM Batch")
-  ArrayList<Batch> getAllBatches();
+  List<Map<String, Object>> getAllBatches();
 
 
 
