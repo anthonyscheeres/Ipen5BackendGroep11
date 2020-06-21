@@ -175,7 +175,8 @@ public interface BatchDAO {
           "SELECT Platform, Username FROM BatchContactPersoon "
           + "left join Batch on BatchContactPersoon.Batch = Batch.BatchID "
           + "left join ContactPersoon on BatchContactPersoon.ContactPersoon = ContactPersoon.UserID "
-          + "left join Contact on Contact.UserID = ContactPersoon.UserID right join Platform on Contact.Platform = Platform.PlatformName "
+          + "left join Contact on Contact.UserID = ContactPersoon.UserID "
+          + "left join Platform on Contact.Platform = Platform.PlatformName "
           + "WHERE Batch = :Batch; "
    		
        )
