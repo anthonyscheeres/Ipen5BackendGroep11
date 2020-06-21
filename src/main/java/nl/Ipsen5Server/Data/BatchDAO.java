@@ -1,8 +1,12 @@
 package nl.Ipsen5Server.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import nl.Ipsen5Server.Domain.Batch;
+import nl.Ipsen5Server.Domain.Message;
+import nl.Ipsen5Server.Service.BatchMapper;
 import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -14,7 +18,7 @@ import org.jdbi.v3.core.mapper.*;
 
 
 
-@RegisterRowMapper(MapMapper.class)
+@RegisterRowMapper(BatchMapper.class)
 public interface BatchDAO {
 
 
@@ -23,6 +27,8 @@ public interface BatchDAO {
      * @author Anthony Scheeres
      *
      */
+    @SqlQuery("SELECT * FROM Batch")
+    ArrayList<Batch> getAllBatches();
 
     @SqlUpdate(
 
