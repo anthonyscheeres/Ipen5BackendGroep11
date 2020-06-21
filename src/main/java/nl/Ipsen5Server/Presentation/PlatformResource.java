@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -31,7 +32,7 @@ public class PlatformResource {
 	  * @author Anthony Scheeres
 	  *
 	  */
-	 @GET
+	 @POST
 	 @Path("/send/{message}")
 	 @Produces(MediaType.APPLICATION_JSON)
 	 public Response sendMessagesToPlatform(@PathParam("message") String message, List<SocialMediaUsers> users){
