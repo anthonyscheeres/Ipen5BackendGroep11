@@ -1,12 +1,10 @@
 package nl.Ipsen5Server.Interfaces;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.NotAuthorizedException;
-
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
+
+import javax.ws.rs.NotAuthorizedException;
+import java.util.Map;
 
 
 

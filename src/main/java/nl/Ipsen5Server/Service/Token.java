@@ -1,22 +1,17 @@
 package nl.Ipsen5Server.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.NotAuthorizedException;
-
-import org.joda.time.LocalDateTime;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoder;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
 import nl.Ipsen5Server.Interfaces.Authorisation;
+import org.joda.time.LocalDateTime;
+
+import javax.ws.rs.NotAuthorizedException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**

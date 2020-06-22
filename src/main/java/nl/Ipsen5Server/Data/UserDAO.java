@@ -8,7 +8,6 @@ import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 @RegisterRowMapper(UserMapper.class)
 public interface UserDAO {
