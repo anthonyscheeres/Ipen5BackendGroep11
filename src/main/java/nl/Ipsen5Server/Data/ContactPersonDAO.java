@@ -5,6 +5,7 @@ import nl.Ipsen5Server.Service.ContactPersonMapper;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 import java.util.ArrayList;
 
@@ -17,5 +18,10 @@ public interface ContactPersonDAO {
     ContactPerson getTemplateByContactPersonID(
             @Bind("ContactPersonID") String ContactPersonID
     );
+
+    @SqlUpdate("DELETE FROM ContactPersoon WHERE UserId = :ContactPersonID")
+    void deleteContactPerson(@Bind("ContactPersonID") String ContactPersonID);
+
+
 }
 

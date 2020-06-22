@@ -11,7 +11,7 @@ public class ContactPersonMapper implements RowMapper<ContactPerson> {
 
     public ContactPerson map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new ContactPerson(
-                rs.getString("UserId"),
+                rs.getString("userId"),
                 rs.getString("ContactName"),
                 rs.getString("OriginalPost"),
                 rs.getString("CustomMessage"),

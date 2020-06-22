@@ -35,9 +35,7 @@ public interface BatchDAO {
 
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
     @SqlUpdate(
@@ -53,9 +51,7 @@ public interface BatchDAO {
     	    ) throws UnableToExecuteStatementException;
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
     @SqlUpdate(
@@ -75,9 +71,7 @@ public interface BatchDAO {
     ) throws  UnableToExecuteStatementException;
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
     @SqlUpdate(
@@ -98,9 +92,7 @@ public interface BatchDAO {
 
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
     @SqlUpdate(
@@ -124,9 +116,7 @@ public interface BatchDAO {
 
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
 
@@ -156,9 +146,7 @@ public interface BatchDAO {
 
 
     /**
-     *
      * @author Anthony Scheeres
-     *
      */
 
     @SqlUpdate(

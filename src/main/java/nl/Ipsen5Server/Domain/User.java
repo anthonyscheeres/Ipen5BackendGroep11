@@ -2,10 +2,6 @@ package nl.Ipsen5Server.Domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.glassfish.jersey.server.JSONP;
-import javax.validation.constraints.NotNull;
-import java.security.Principal;
-import java.util.UUID;
 
 public class User  {
 
