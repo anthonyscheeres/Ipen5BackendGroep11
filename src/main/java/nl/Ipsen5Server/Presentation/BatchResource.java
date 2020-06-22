@@ -67,11 +67,24 @@ public class BatchResource {
 
  }
 
+    @POST
+    @Path("/delete")
+    public Response deleteBatch(
+            @FormParam("BatchID") String BatchID
+    ){
+        dao.deleteBatchContactPersoon(BatchID);
+        dao.deleteBatchByID(BatchID);
+        return Response.ok()
+                .entity("Deleted template with id: ' " + BatchID + " '  successfully")
+                .build();
+    }
 
 
 
 
- /**
+
+
+    /**
   *
   * @author Anthony Scheeres
   *
