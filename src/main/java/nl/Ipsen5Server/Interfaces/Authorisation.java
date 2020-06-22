@@ -1,3 +1,4 @@
+
 package nl.Ipsen5Server.Interfaces;
 
 import nl.Ipsen5Server.Data.UserDAO;
@@ -22,3 +23,4 @@ public interface Authorisation {
 	
 	
 }
+

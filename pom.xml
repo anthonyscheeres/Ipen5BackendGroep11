@@ -73,6 +73,7 @@
       <artifactId>json</artifactId>
       <version>20190722</version>
     </dependency>
+
 <!--    <dependency>-->
 <!--      <groupId>nl.ipsen5</groupId>-->
 <!--      <artifactId>ipsen5</artifactId>-->
@@ -88,6 +89,7 @@
       <artifactId>dropwizard-jdbi3</artifactId>
       <version>1.3.14</version>
     </dependency>
+
   </dependencies>
 
   <build>

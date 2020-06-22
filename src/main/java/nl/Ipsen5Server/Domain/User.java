@@ -1,3 +1,4 @@
+
 package nl.Ipsen5Server.Domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -33,3 +34,5 @@ public class User  {
 
 
 }
+
+

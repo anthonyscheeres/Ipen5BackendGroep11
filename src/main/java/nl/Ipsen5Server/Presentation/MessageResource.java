@@ -1,12 +1,15 @@
+
 package nl.Ipsen5Server.Presentation;
 
 import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Domain.Message;
+import nl.Ipsen5Server.Service.APIstarter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.List;
 
 @Path("/messagetemplate")
 public class MessageResource {
@@ -77,6 +80,27 @@ public class MessageResource {
                 .build();
     }
 
+    @POST
+    @Path("/send")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response createNewTemplate(
+            @FormParam("Message") String Message,
+            @FormParam("Users") String Users
+    ) {
+        String[] userList = Users.replace("[", "").replace("]", "").split(",");
+        ArrayList<String> userArrayList  = new ArrayList<String>();
+        for (String i:userList){
+            userArrayList.add(i);
+        }
+
+        APIstarter i = new APIstarter();
+        i.SendMessageKik(Message, userArrayList);
+
+        return Response.ok()
+                .entity("Successfully sent: " + Message + "To: " + Users)
+                .build();
+    }
 
 
 }
+

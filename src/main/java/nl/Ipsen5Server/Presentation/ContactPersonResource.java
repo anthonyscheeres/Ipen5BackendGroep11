@@ -1,3 +1,4 @@
+
 package nl.Ipsen5Server.Presentation;
 
 import nl.Ipsen5Server.Data.ContactPersonDAO;
@@ -60,3 +61,4 @@ public class ContactPersonResource {
 
 
 }
+

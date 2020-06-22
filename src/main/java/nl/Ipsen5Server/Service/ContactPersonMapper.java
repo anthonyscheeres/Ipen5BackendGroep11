@@ -1,3 +1,4 @@
+
 package nl.Ipsen5Server.Service;
 
 import nl.Ipsen5Server.Domain.ContactPerson;
@@ -19,4 +20,5 @@ public class ContactPersonMapper implements RowMapper<ContactPerson> {
                 rs.getString("Info")
         );
     }
+
 }

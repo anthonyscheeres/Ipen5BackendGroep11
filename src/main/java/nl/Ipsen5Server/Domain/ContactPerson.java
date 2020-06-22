@@ -66,3 +66,4 @@ public class ContactPerson {
         Info = info;
     }
 }
+

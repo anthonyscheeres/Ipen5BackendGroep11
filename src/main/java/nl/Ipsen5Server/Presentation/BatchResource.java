@@ -1,6 +1,22 @@
 package nl.Ipsen5Server.Presentation;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import nl.Ipsen5Server.Domain.Batch;
+import nl.Ipsen5Server.Domain.Message;
+import org.jdbi.v3.sqlobject.SqlObject;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
+
+
+
 import nl.Ipsen5Server.Data.BatchDAO;
 import nl.Ipsen5Server.Data.UserDAO;
 import nl.Ipsen5Server.Domain.Account;
@@ -50,12 +66,122 @@ public class BatchResource {
         Response response = defaultRespone; //return this response unless changed
 
 
-        try {
+
+ @GET
+ @Path("/all")
+ @Produces(MediaType.APPLICATION_JSON)
+ public Response getAllBatches() {
+  List<Map<String, Object>> allBatches = dao.getAllBatches();
+
+  if (allBatches == null) {
+   throw new WebApplicationException(Response.Status.NOT_FOUND);
+  }
+
+  return Response.ok(allBatches, MediaType.APPLICATION_JSON).build();
+
+ }
+
 
             String Email = "Email";
             String UserPassword = "UserPassword";
 
             Map<String, String> credentials = tokenUtils.decrypt(token);
+
+
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/showBatch/{id}/")
+ @Produces(MediaType.APPLICATION_JSON)
+ public List<Map<String, Object>> selectBatchesById(@PathParam("token") String token, @PathParam("id") String id) {
+  List<Map<String, Object>> response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectSpecificBatches(id);
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
+
+
+
+ }
+
+
+
+
+
+ /**
+  *
+  * @author Anthony Scheeres
+  *
+  */
+ @GET
+ @Path("/{token}/show")
+ @Produces(MediaType.APPLICATION_JSON)
+ public List<Map<String, Object>> showBatches(@PathParam("token") String token) {
+  List<Map<String, Object>> response = null;
+
+  try {
+
+   String Email = "Email";
+   String UserPassword = "UserPassword";
+
+   Map < String, String > credentials = tokenUtils.decrypt(token);
+
+
+   Email = credentials.get(Email);
+   UserPassword = credentials.get(UserPassword);
+
+   tokenUtils.check(new Account(Email, UserPassword), user);
+
+   response = dao.SelectBatches();
+
+
+
+
+
+  } catch (NotAuthorizedException e) {
+
+  }
+
+  return response;
+
+
+
+ }
+
+ /**
+ *
+ * @author Anthony Scheeres
+ *
+ */
+@GET
+@Produces(MediaType.APPLICATION_JSON)
+public List<Map<String, Object>> selectBatches() {
+	return dao.SelectBatchNames();
+	
+}
+
+ 
 
 
             Email = credentials.get(Email);
@@ -80,9 +206,13 @@ public class BatchResource {
 
             } catch (SQLException e) {
 
+
                 Response fillNameNotRightResponse = Response.serverError()
                         .entity(failedResponeMessage)
                         .build();
+
+	     } catch (UnableToExecuteStatementException e) {
+
 
                 response = fillNameNotRightResponse;
 
@@ -92,9 +222,21 @@ public class BatchResource {
 
             new Thread(() -> {
 
+    for (Dump excelRow: excel) {
+    
+
+      try {
+    	  
+       dao.InsertPlatform(
+
+
                 for (Dump excelRow : excel) {
                     try {
 
+
+       );
+       
+      } catch (UnableToExecuteStatementException e) {
 
                         try {
 
@@ -104,13 +246,19 @@ public class BatchResource {
 
                             );
 
-                        } catch (SQLException e) {
 
+      } catch (UnableToExecuteStatementException e) {
 
-                        }
+      }
+     
+     
+     try {
+      dao.InsertContact(
+
 
 
                         try {
+
 
                             dao.InsertContactPersoon(
 
@@ -120,16 +268,32 @@ public class BatchResource {
 
                         } catch (SQLException e) {
 
+
                         }
 
-                        dao.InsertContact(
 
-                                excelRow.getGenoemde_social_media(),
-                                excelRow.getUser()
+      );
+      
+      
+      
+      
+     } catch (UnableToExecuteStatementException e) {
 
-                        );
+     }
+      
+dao.UpdateInfo(
 
-                        dao.UpdateInfo(
+	       excelRow.getPartial_IP(),
+	       excelRow.getMessage(),
+	       excelRow.getGenoemde_social_media(),
+	       excelRow.getUser()
+
+	      );
+
+    
+    }
+   
+
 
                                 excelRow.getPartial_IP(),
                                 excelRow.getMessage(),
