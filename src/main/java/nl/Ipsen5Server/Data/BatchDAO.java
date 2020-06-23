@@ -22,6 +22,16 @@ public interface BatchDAO {
   @SqlQuery("SELECT * FROM Batch")
   List<Map<String, Object>> getAllBatches();
 
+  @SqlUpdate("DELETE FROM BatchContactPersoon WHERE Batch = :Batch")
+  void deleteBatchContactPersoon(
+          @Bind("Batch") String Batch
+  );
+
+  @SqlUpdate("DELETE FROM Batch WHERE BatchID = :BatchID")
+  void deleteBatchByID(
+          @Bind("BatchID") String BatchID
+  );
+
 
 
     /**
