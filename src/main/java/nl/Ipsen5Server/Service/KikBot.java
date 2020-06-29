@@ -1,6 +1,7 @@
 package nl.Ipsen5Server.Service;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
+import nl.Ipsen5Server.Interfaces.Platform;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -8,30 +9,24 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.FileWriter;
 
+/**
+*
+* @author Anthony Scheeres
+*
+*/
+public class KikBot implements Platform{
+   
+	
+	public List<String> usernames = new ArrayList<String>(); 
+	
+	public String platformName = "kik";
 
-public class APIstarter {
-    public APIstarter(){
-        //sets up server
-        try {
-        String command = "python -m kik-bot-api-unofficial.examples";
-        Process process = null;
-        process = Runtime.getRuntime().exec(command);
-        assert process != null;
-
-        logOutput(process.getInputStream(), "");
-        logOutput(process.getErrorStream(), "Error: ");
-
-        //process.waitFor();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void SendMessageKik(String message, ArrayList<String> users)  {
+	@Override
+	public void send(String message, List<String> users) {
 
         //writes users to file that will be read by API
         FileWriter fw= null;
@@ -54,18 +49,35 @@ public class APIstarter {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
+     
+	}
+	
+	
+	public List<String> getUsernames() {
+		return usernames;
+	}
 
-    private void logOutput(InputStream inputStream, String prefix) {
-        new Thread(() -> {
-            Scanner scanner = new Scanner(inputStream, "UTF-8");
-            while (scanner.hasNextLine()) {
-                synchronized (this) {
-                    System.out.println(prefix + scanner.nextLine());
-                }
-            }
-            scanner.close();
-        }).start();
-    }
+
+
+
+	public void setUsernames(List<String> usernames) {
+		this.usernames = usernames;
+	}
+
+
+
+
+	public String getPlatformName() {
+		return platformName;
+	}
+
+
+
+
+	public void setPlatformName(String platformName) {
+		this.platformName = platformName;
+	}
+	
+	
 
 }

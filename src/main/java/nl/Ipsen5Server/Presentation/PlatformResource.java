@@ -12,22 +12,27 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import nl.Ipsen5Server.Interfaces.Platform;
 import nl.Ipsen5Server.Models.SocialMediaUsers;
-import nl.Ipsen5Server.Service.APIstarter;
+import nl.Ipsen5Server.Service.KikBot;
 
 @Path("/platform")
 public class PlatformResource {
 	
-	private APIstarter kik;
-
-	public PlatformResource(APIstarter kik) {
-		super();
-		this.kik = kik;
-	}
-	
+List<Platform> platforms;
 
 
-	 /**
+
+
+	 public PlatformResource(List<Platform> platforms) {
+	super();
+	this.platforms = platforms;
+}
+
+
+
+
+	/**
 	  *
 	  * @author Anthony Scheeres
 	  *
@@ -43,23 +48,26 @@ public class PlatformResource {
 		  
 		  new Thread(() -> {
 		  
-		 ArrayList<String> arrayOfUsernamesToMessageOnKik = new ArrayList<String>();
-		 
-		 
-		 for(SocialMediaUsers user : users ) {
-			 
-			 
-			 if (user.getPlatform().toLowerCase().contains("kik")) {
+	 
+		 for (Platform platform : platforms) {
+		 for (SocialMediaUsers user : users ) {
+
+			 if (user.getPlatform().toLowerCase().contains(platform.getPlatformName())) {
 				 
-				 arrayOfUsernamesToMessageOnKik.add(user.getUsername()) ;
+				 List<String> usernames = platform.getUsernames();
+				 
+				 usernames.add(user.username);
+				 
+				 platform.setUsernames(usernames);
 				 
 			 }
 			 
-			 
+			 }
+		 platform.send(message, platform.getUsernames());
 		 }
 		  
 		  
-		  this.kik.SendMessageKik(message, arrayOfUsernamesToMessageOnKik);
+		
 		  
 		  }).start();
 		  
@@ -68,5 +76,8 @@ public class PlatformResource {
 	 }
 	
 	
+	 
+	 
+	 
 	
 }

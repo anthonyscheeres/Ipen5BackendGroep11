@@ -19,25 +19,7 @@ public class ColleagueResource {
 		this.dao = dao;
 	}
 
-	@GET
-    public List<Colleague> getAll() { return dao.getAll(); }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/all")
-    public Response getAllColleagues() {
-        ArrayList<Colleague> allColleagues = dao.getAll();
-
-        
-        //TODO: rewrite this method so it authorizes the user by checking the token before serving the data
-        
-        
-        if (allColleagues == null) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-
-        return Response.ok(allColleagues, MediaType.APPLICATION_JSON).build();
-    }
+	
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

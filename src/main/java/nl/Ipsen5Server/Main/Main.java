@@ -3,6 +3,7 @@ package nl.Ipsen5Server.Main;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -15,9 +16,9 @@ import nl.Ipsen5Server.Domain.Colleague;
 import nl.Ipsen5Server.Presentation.*;
 
 import nl.Ipsen5Server.Interfaces.Authorisation;
-
+import nl.Ipsen5Server.Interfaces.Platform;
 import nl.Ipsen5Server.Presentation.UserResource;
-import nl.Ipsen5Server.Service.APIstarter;
+import nl.Ipsen5Server.Service.KikBot;
 import nl.Ipsen5Server.Presentation.PlatformResource;
 import nl.Ipsen5Server.Presentation.ContactPersonResource;
 import nl.Ipsen5Server.Service.Token;
@@ -77,8 +78,13 @@ public class Main extends Application<Settings>{
 
         Authorisation author =  new Token();// forces you to use the interfaced method
         
-        APIstarter a = new APIstarter();
+        Platform a = new KikBot();
         
+        
+        List<Platform> platforms = new ArrayList<Platform>();
+        
+   
+        platforms.add(a);
         
         //test code here =>
 
@@ -93,7 +99,7 @@ public class Main extends Application<Settings>{
         environment.jersey().register(new BatchResource(batchDAO, author, userDAO) );
         environment.jersey().register(new ContactPersonResource(contactPersonDAO));
         environment.jersey().register(new ColleagueResource(colleagueDAO));
-        environment.jersey().register(new PlatformResource(a));
+        environment.jersey().register(new PlatformResource(platforms));
 
  
         

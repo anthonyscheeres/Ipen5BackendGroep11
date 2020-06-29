@@ -4,7 +4,7 @@ database:
   driverClass: org.mariadb.jdbc.Driver
 
   #databse username
-  user: groep11
+  user: adminOfDB
 
   #Database password
   password: verry good database password

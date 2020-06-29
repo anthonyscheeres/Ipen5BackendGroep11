@@ -2,7 +2,7 @@ package nl.Ipsen5Server.Presentation;
 
 import nl.Ipsen5Server.Data.MessageDAO;
 import nl.Ipsen5Server.Domain.Message;
-import nl.Ipsen5Server.Service.APIstarter;
+import nl.Ipsen5Server.Service.KikBot;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -92,8 +92,8 @@ public class MessageResource {
             userArrayList.add(i);
         }
 
-        APIstarter i = new APIstarter();
-        i.SendMessageKik(Message, userArrayList);
+        KikBot i = new KikBot();
+        i.send(Message, userArrayList);
 
         return Response.ok()
                 .entity("Successfully sent: " + Message + "To: " + Users)
